@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -33,12 +34,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding  = true
+    }
 }
 
 dependencies {
 
-    //noinspection GradleCompatible
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -49,8 +53,9 @@ dependencies {
     implementation("android.arch.lifecycle:extensions:1.1.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    compileOnly("com.google.dagger:dagger:2.42")
-    annotationProcessor("com.google.dagger:dagger-compiler:2.42")
+    implementation("com.google.dagger:dagger:2.5")
+    kapt("com.google.dagger:dagger-compiler:2.5")
+    implementation("org.glassfish:javax.annotation:10.0-b28")
     implementation("androidx.browser:browser:1.6.0")
 
     testImplementation("junit:junit:4.13.2")

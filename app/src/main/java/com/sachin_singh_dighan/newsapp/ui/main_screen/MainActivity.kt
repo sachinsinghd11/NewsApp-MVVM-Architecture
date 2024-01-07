@@ -1,5 +1,6 @@
 package com.sachin_singh_dighan.newsapp.ui.main_screen
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.R
 import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
@@ -16,11 +18,12 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityMainBinding
 import com.sachin_singh_dighan.newsapp.di.component.main_screen.DaggerMainActivityComponent
 import com.sachin_singh_dighan.newsapp.di.module.main_screen.MainActivityModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineActivity
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     @Inject
     lateinit var mainViewModel: MainViewModel
@@ -84,5 +87,15 @@ class MainActivity : AppCompatActivity() {
         DaggerMainActivityComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
             .mainActivityModule(MainActivityModule(this)).build().inject(this)
+    }
+
+    fun onMainSectionItemClick(sectionClicked: String){
+        if(sectionClicked == AppConstant.TOP_HEADLINES){
+            val intent = Intent(this, TopHeadLineActivity::class.java)
+            startActivity(intent)
+        }else{
+            Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()
+        }
+
     }
 }

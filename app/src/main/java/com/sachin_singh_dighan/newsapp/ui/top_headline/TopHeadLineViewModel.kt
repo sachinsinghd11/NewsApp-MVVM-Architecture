@@ -9,7 +9,6 @@ import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TopHeadLineViewModel(private val topHeadLineRepository: TopHeadLineRepository): ViewModel() {

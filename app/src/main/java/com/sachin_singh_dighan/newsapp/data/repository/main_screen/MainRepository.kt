@@ -15,7 +15,7 @@ class MainRepository @Inject constructor(){
         return flow {
             val mainSectionList = mutableListOf<MainSection>()
             mainSectionList.add(MainSection(AppConstant.TOP_HEADLINES))
-            mainSectionList.add(MainSection(AppConstant.NEW_SOURCES))
+            mainSectionList.add(MainSection(AppConstant.NEWS_SOURCES))
             mainSectionList.add(MainSection(AppConstant.COUNTRIES))
             mainSectionList.add(MainSection(AppConstant.LANGUAGES))
             mainSectionList.add(MainSection(AppConstant.SEARCH))

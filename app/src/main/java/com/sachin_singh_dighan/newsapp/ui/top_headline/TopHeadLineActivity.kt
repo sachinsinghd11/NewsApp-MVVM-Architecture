@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.model.top_headline.Article
 import com.sachin_singh_dighan.newsapp.databinding.ActivityTopHeadLineBinding
@@ -27,13 +28,28 @@ class TopHeadLineActivity : AppCompatActivity() {
     lateinit var adapter: TopHeadLineAdapter
 
     private lateinit var binding: ActivityTopHeadLineBinding
+
+    companion object {
+        const val COUNTRY_CODE = "country code"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityTopHeadLineBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        fetchNewsData()
         setupUI()
         setupObserver()
+    }
+
+    private fun fetchNewsData(){
+        val bundle = intent.extras
+        if (bundle != null){
+            newsListViewModel.fetchNews(bundle.getString(COUNTRY_CODE)?:AppConstant.COUNTRY)
+        }else{
+            newsListViewModel.fetchNews(AppConstant.COUNTRY)
+        }
     }
 
     private fun setupObserver() {
@@ -74,7 +90,7 @@ class TopHeadLineActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    private fun renderList(articleList: List<Article>) {
+    private fun renderList(articleList:  List<Article>) {
         adapter.addData(articleList)
         adapter.notifyDataSetChanged()
     }

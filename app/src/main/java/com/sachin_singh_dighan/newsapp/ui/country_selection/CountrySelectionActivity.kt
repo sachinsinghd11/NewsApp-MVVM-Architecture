@@ -1,10 +1,10 @@
-package com.sachin_singh_dighan.newsapp.ui.main_screen
+package com.sachin_singh_dighan.newsapp.ui.country_selection
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -12,38 +12,47 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.NewsApplication
+import com.sachin_singh_dighan.newsapp.R
+import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
 import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
+import com.sachin_singh_dighan.newsapp.databinding.ActivityCountrySelectionBinding
 import com.sachin_singh_dighan.newsapp.databinding.ActivityMainBinding
-import com.sachin_singh_dighan.newsapp.di.component.main_screen.DaggerMainActivityComponent
-import com.sachin_singh_dighan.newsapp.di.module.main_screen.MainActivityModule
+import com.sachin_singh_dighan.newsapp.di.component.country_selection.DaggerCountrySelectionComponent
+import com.sachin_singh_dighan.newsapp.di.module.country_selection.CountrySelectionModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
-import com.sachin_singh_dighan.newsapp.ui.country_selection.CountrySelectionActivity
-import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesActivity
+import com.sachin_singh_dighan.newsapp.ui.main_screen.MainActivityAdapter
+import com.sachin_singh_dighan.newsapp.ui.main_screen.MainViewModel
 import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(){
+class CountrySelectionActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var mainViewModel: MainViewModel
+    lateinit var countrySelectionViewModel: CountrySelectionViewModel
 
     @Inject
-    lateinit var adapter: MainActivityAdapter
+    lateinit var adapter: CountrySelectionAdapter
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityCountrySelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityCountrySelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUi()
         setupObserver()
     }
 
+    private fun injectDependencies() {
+        DaggerCountrySelectionComponent.builder()
+            .applicationComponent((application as NewsApplication).applicationComponent)
+            .countrySelectionModule(CountrySelectionModule(this)).build().inject(this)
+    }
+
     private fun setUi() {
-    val recyclerView = binding.mainRecyclerView
+        val recyclerView = binding.mainRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -54,10 +63,10 @@ class MainActivity : AppCompatActivity(){
         recyclerView.adapter = adapter
     }
 
-    private fun setupObserver(){
+    private fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                mainViewModel.uiState.collect(){
+                countrySelectionViewModel.uiState.collect(){
                     when(it){
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
@@ -70,7 +79,7 @@ class MainActivity : AppCompatActivity(){
                         }
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG)
+                            Toast.makeText(this@CountrySelectionActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                         }
                     }
@@ -79,37 +88,16 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun renderList(mainSection: List<MainSection>){
-        adapter.addData(mainSection)
+
+    private fun renderList(countrySelection: List<CountrySelection>){
+        adapter.addData(countrySelection)
     }
 
-    private fun injectDependencies() {
-        DaggerMainActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .mainActivityModule(MainActivityModule(this)).build().inject(this)
-    }
-
-    fun onMainSectionItemClick(sectionClicked: String){
-        when (sectionClicked){
-            AppConstant.TOP_HEADLINES ->{
-                val intent = Intent(this, TopHeadLineActivity::class.java)
-                startActivity(intent)
-            }
-            AppConstant.NEWS_SOURCES ->{
-                val intent = Intent(this, NewSourcesActivity::class.java)
-                startActivity(intent)
-            }
-            AppConstant.COUNTRIES ->{
-                val intent = Intent(this, CountrySelectionActivity::class.java)
-                startActivity(intent)
-            }
-            AppConstant.LANGUAGES ->{
-                Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()
-            }
-            AppConstant.SEARCH ->{
-                Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()
-            }
-        }
-
+    fun onCountryClick(countryCode: String) {
+        val bundle = Bundle()
+        bundle.putString(TopHeadLineActivity.COUNTRY_CODE, countryCode)
+        val intent = Intent(this, TopHeadLineActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }

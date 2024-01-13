@@ -125,5 +125,36 @@ object AppConstant {
     const val SOUTH_AFRICA_CODE = "za"
 
 
+    //Languages
+    const val ARABIC = "Arabic"
+    const val ARABIC_CODE = "ar"
+    const val GERMAN = "German"
+    const val GERMAN_CODE = "de"
+    const val ENGLISH = "English"
+    const val ENGLISH_CODE = "en"
+    const val SPANISH = "Spanish"
+    const val SPANISH_CODE = "es"
+    const val FRENCH = "French"
+    const val FRENCH_CODE = "fr"
+    const val HEBREW = "Hebrew"
+    const val HEBREW_CODE = "he"
+    const val ITALIAN = "Italian"
+    const val ITALIAN_CODE = "it"
+    const val DUTCH = "Dutch"
+    const val DUTCH_CODE = "nl"
+    const val NORWEGIAN = "Norwegian"
+    const val NORWEGIAN_CODE = "no"
+    const val PORTUGUESE = "Portuguese"
+    const val PORTUGUESE_CODE = "pt"
+    const val RUSSIAN = "Russian"
+    const val RUSSIAN_CODE = "ru"
+    const val SWEDISH = "Swedish"
+    const val SWEDISH_CODE = "sv"
+    const val UDMURT = "Udmurt"
+    const val UDMURT_CODE = "ud"
+    const val CHINESE = "Chinese"
+    const val CHINESE_CODE = "zh"
+
+
 
 }

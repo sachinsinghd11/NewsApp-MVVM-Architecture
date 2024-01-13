@@ -18,6 +18,7 @@ import com.sachin_singh_dighan.newsapp.di.component.main_screen.DaggerMainActivi
 import com.sachin_singh_dighan.newsapp.di.module.main_screen.MainActivityModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.country_selection.CountrySelectionActivity
+import com.sachin_singh_dighan.newsapp.ui.language_selection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineActivity
 import kotlinx.coroutines.launch
@@ -104,7 +105,8 @@ class MainActivity : AppCompatActivity(){
                 startActivity(intent)
             }
             AppConstant.LANGUAGES ->{
-                Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LanguageSelectionActivity::class.java)
+                startActivity(intent)
             }
             AppConstant.SEARCH ->{
                 Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()

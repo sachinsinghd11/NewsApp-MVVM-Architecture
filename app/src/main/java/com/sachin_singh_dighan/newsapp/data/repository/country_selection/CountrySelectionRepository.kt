@@ -10,8 +10,8 @@ import javax.inject.Inject
 class CountrySelectionRepository @Inject constructor(){
 
     fun getDataForCountry(): Flow<List<CountrySelection>> {
+        val countrySelectionList = mutableListOf<CountrySelection>()
         return flow {
-            val countrySelectionList = mutableListOf<CountrySelection>()
             countrySelectionList.add(CountrySelection(AppConstant.UNITED_ARAB_EMIRATES_CODE, AppConstant.UNITED_ARAB_EMIRATES))
             countrySelectionList.add(CountrySelection(AppConstant.ARGENTINA_CODE, AppConstant.ARGENTINA))
             countrySelectionList.add(CountrySelection(AppConstant.AUSTRIA_CODE, AppConstant.AUSTRIA))

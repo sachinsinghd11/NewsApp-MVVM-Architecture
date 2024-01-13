@@ -31,6 +31,7 @@ class TopHeadLineActivity : AppCompatActivity() {
 
     companion object {
         const val COUNTRY_CODE = "country code"
+        const val LANGUAGE_CODE = "language code"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class TopHeadLineActivity : AppCompatActivity() {
     private fun fetchNewsData(){
         val bundle = intent.extras
         if (bundle != null){
-            newsListViewModel.fetchNews(bundle.getString(COUNTRY_CODE)?:AppConstant.COUNTRY)
+            newsListViewModel.fetchNews(bundle.getString(COUNTRY_CODE)?:"", bundle.getString(LANGUAGE_CODE)?:"")
         }else{
             newsListViewModel.fetchNews(AppConstant.COUNTRY)
         }

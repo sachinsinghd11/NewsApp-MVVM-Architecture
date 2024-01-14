@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsApp-MVVM-Architecture</string>
+    <string name="popup_title">Ooops</string>
+    <string name="popup_sub_title">Something went wrong. Try once again</string>
 </resources>

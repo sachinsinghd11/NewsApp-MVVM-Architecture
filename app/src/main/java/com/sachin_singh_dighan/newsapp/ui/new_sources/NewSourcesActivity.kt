@@ -17,6 +17,7 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityNewSourcesBinding
 import com.sachin_singh_dighan.newsapp.di.component.new_sources.DaggerNewSourcesComponent
 import com.sachin_singh_dighan.newsapp.di.module.new_sources.NewSourcesModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +28,9 @@ class NewSourcesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var adapter: NewSourcesAdapter
+
+    @Inject
+    lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityNewSourcesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +59,7 @@ class NewSourcesActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@NewSourcesActivity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            errorDialog.showResetPasswordDialog(this@NewSourcesActivity)
                         }
                     }
                 }

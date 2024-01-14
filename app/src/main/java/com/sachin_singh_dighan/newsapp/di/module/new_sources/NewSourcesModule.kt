@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sachin_singh_dighan.newsapp.data.repository.new_sources.NewSourcesRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesAdapter
 import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesViewModel
@@ -31,4 +32,7 @@ class NewSourcesModule(private val activity: NewSourcesActivity) {
 
     @Provides
     fun provideNewSourceAdapter() = NewSourcesAdapter(ArrayList(), activity)
+
+    @Provides
+    fun provideErrorDialog() = ErrorDialog()
 }

@@ -16,6 +16,7 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityTopHeadLineBinding
 import com.sachin_singh_dighan.newsapp.di.component.top_headline.DaggerTopHeadLineComponent
 import com.sachin_singh_dighan.newsapp.di.module.top_headline.TopHeadLineModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,9 @@ class TopHeadLineActivity : AppCompatActivity() {
 
     @Inject
     lateinit var adapter: TopHeadLineAdapter
+
+    @Inject
+    lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityTopHeadLineBinding
 
@@ -70,8 +74,7 @@ class TopHeadLineActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@TopHeadLineActivity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            errorDialog.showResetPasswordDialog(this@TopHeadLineActivity)
                         }
                     }
                 }

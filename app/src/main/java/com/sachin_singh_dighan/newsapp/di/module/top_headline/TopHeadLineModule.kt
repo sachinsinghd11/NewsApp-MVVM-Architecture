@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sachin_singh_dighan.newsapp.data.repository.top_headline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineAdapter
 import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineViewModel
 import dagger.Module
@@ -31,4 +32,7 @@ class TopHeadLineModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun provideTopHeadLineAdapter() = TopHeadLineAdapter(ArrayList())
+
+    @Provides
+    fun provideErrorDialog() = ErrorDialog()
 }

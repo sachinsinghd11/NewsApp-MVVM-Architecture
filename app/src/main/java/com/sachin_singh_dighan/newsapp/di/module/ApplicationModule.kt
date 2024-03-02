@@ -46,5 +46,4 @@ class ApplicationModule(private val application: NewsApplication) {
         return Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(gsonConverterFactory)
             .client(client).build().create(NetworkService::class.java)
     }
-
 }

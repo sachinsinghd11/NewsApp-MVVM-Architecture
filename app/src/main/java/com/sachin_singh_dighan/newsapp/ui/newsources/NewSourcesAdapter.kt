@@ -3,7 +3,7 @@ package com.sachin_singh_dighan.newsapp.ui.newsources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sachin_singh_dighan.newsapp.data.model.new_sources.Sources
+import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.NewSourceItemRowBinding
 
 class NewSourcesAdapter (

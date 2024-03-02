@@ -1,7 +1,7 @@
-package com.sachin_singh_dighan.newsapp.data.repository.new_sources
+package com.sachin_singh_dighan.newsapp.data.repository.newsources
 
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
-import com.sachin_singh_dighan.newsapp.data.model.new_sources.Sources
+import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp.data.model.top_headline
+package com.sachin_singh_dighan.newsapp.data.model.topheadline
 
 import com.google.gson.annotations.SerializedName
 

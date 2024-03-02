@@ -1,8 +1,7 @@
-package com.sachin_singh_dighan.newsapp.data.repository.country_selection
+package com.sachin_singh_dighan.newsapp.data.repository.countryselection
 
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
-import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
+import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

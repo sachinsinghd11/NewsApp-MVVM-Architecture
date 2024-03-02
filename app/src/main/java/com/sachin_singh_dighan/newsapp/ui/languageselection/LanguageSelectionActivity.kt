@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.NewsApplication
-import com.sachin_singh_dighan.newsapp.data.model.language_selection.LanguageData
+import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import com.sachin_singh_dighan.newsapp.databinding.ActivityLanguageSelectionBinding
 import com.sachin_singh_dighan.newsapp.di.component.languageselection.DaggerLanguageSelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.languageselection.LanguageSelectionModule

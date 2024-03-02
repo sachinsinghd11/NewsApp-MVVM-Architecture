@@ -3,8 +3,8 @@ package com.sachin_singh_dighan.newsapp.ui.languageselection
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sachin_singh_dighan.newsapp.data.model.language_selection.LanguageData
-import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
+import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.LanguageSelectionItemRowBinding
 
 class LanguageSelectionAdapter (

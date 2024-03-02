@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.di.module.countryselection
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
-import com.sachin_singh_dighan.newsapp.data.repository.country_selection.CountrySelectionRepository
+import com.sachin_singh_dighan.newsapp.data.repository.countryselection.CountrySelectionRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity

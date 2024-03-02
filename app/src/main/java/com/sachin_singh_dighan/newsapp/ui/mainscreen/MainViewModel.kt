@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.mainscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
-import com.sachin_singh_dighan.newsapp.data.repository.main_screen.MainRepository
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
+import com.sachin_singh_dighan.newsapp.data.repository.mainscreen.MainRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

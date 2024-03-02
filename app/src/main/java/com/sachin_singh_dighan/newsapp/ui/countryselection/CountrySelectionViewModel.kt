@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.countryselection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
-import com.sachin_singh_dighan.newsapp.data.repository.country_selection.CountrySelectionRepository
+import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
+import com.sachin_singh_dighan.newsapp.data.repository.countryselection.CountrySelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp.data.model.new_sources
+package com.sachin_singh_dighan.newsapp.data.model.newsources
 
 import com.google.gson.annotations.SerializedName
 

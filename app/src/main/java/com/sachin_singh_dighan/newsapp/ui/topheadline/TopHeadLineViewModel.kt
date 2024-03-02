@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.topheadline
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.top_headline.Article
-import com.sachin_singh_dighan.newsapp.data.repository.top_headline.TopHeadLineRepository
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -3,8 +3,8 @@ package com.sachin_singh_dighan.newsapp.ui.searchnews
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.top_headline.Article
-import com.sachin_singh_dighan.newsapp.data.repository.search_news.SearchNewsRepository
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.repository.searchnews.SearchNewsRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

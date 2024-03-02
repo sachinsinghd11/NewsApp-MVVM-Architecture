@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.NewsApplication
-import com.sachin_singh_dighan.newsapp.data.model.new_sources.Sources
+import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.ActivityNewSourcesBinding
 import com.sachin_singh_dighan.newsapp.di.component.newsources.DaggerNewSourcesComponent
 import com.sachin_singh_dighan.newsapp.di.module.newsources.NewSourcesModule

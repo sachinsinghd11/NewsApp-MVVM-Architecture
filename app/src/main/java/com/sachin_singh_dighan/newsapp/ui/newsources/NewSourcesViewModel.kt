@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.newsources
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.new_sources.Sources
-import com.sachin_singh_dighan.newsapp.data.repository.new_sources.NewSourcesRepository
+import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
+import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewSourcesRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

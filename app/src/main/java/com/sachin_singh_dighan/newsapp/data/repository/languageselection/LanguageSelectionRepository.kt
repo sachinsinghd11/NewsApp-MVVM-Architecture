@@ -1,8 +1,7 @@
-package com.sachin_singh_dighan.newsapp.data.repository.language_selection
+package com.sachin_singh_dighan.newsapp.data.repository.languageselection
 
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
-import com.sachin_singh_dighan.newsapp.data.model.language_selection.LanguageData
+import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

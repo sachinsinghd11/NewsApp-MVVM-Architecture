@@ -1,10 +1,9 @@
-package com.sachin_singh_dighan.newsapp.data.repository.main_screen
+package com.sachin_singh_dighan.newsapp.data.repository.mainscreen
 
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 

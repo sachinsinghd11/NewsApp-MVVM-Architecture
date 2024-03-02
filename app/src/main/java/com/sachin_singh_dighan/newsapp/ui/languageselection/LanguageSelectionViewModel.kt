@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.languageselection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.data.model.language_selection.LanguageData
-import com.sachin_singh_dighan.newsapp.data.repository.language_selection.LanguageSelectionRepository
+import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
+import com.sachin_singh_dighan.newsapp.data.repository.languageselection.LanguageSelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

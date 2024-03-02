@@ -1,7 +1,7 @@
-package com.sachin_singh_dighan.newsapp.data.repository.search_news
+package com.sachin_singh_dighan.newsapp.data.repository.searchnews
 
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
-import com.sachin_singh_dighan.newsapp.data.model.top_headline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

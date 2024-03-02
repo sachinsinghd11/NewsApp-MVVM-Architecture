@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.NewsApplication
-import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
+import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.databinding.ActivityCountrySelectionBinding
 import com.sachin_singh_dighan.newsapp.di.component.countryselection.DaggerCountrySelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.countryselection.CountrySelectionModule

@@ -10,7 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.NewsApplication
-import com.sachin_singh_dighan.newsapp.data.model.top_headline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.databinding.ActivitySearchNewsBinding
 import com.sachin_singh_dighan.newsapp.di.component.searchnews.DaggerSearchNewsComponent
 import com.sachin_singh_dighan.newsapp.di.module.searchnews.SearchNewsModule

@@ -3,8 +3,8 @@ package com.sachin_singh_dighan.newsapp.ui.countryselection
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sachin_singh_dighan.newsapp.data.model.country_selection.CountrySelection
-import com.sachin_singh_dighan.newsapp.data.model.main_screen.MainSection
+import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.CountrySelectionItemRowBinding
 
 class CountrySelectionAdapter(

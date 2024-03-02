@@ -3,7 +3,7 @@ package com.sachin_singh_dighan.newsapp.di.module.topheadline
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.sachin_singh_dighan.newsapp.data.repository.top_headline.TopHeadLineRepository
+import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog

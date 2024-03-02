@@ -1,10 +1,8 @@
 package com.sachin_singh_dighan.newsapp.data.api
 
-import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.new_sources.NewSourceResponse
-import com.sachin_singh_dighan.newsapp.data.model.top_headline.TopHeadLinesResponse
+import com.sachin_singh_dighan.newsapp.data.model.newsources.NewSourceResponse
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.TopHeadLinesResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 import javax.inject.Singleton
 

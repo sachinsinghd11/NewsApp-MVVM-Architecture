@@ -16,6 +16,9 @@
         android:theme="@style/Theme.NewsAppMVVMArchitecture"
         tools:targetApi="31">
         <activity
+            android:name=".ui.search_news.SearchNewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.language_selection.LanguageSelectionActivity"
             android:exported="false" />
         <activity

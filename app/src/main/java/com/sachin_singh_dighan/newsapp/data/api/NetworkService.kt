@@ -23,4 +23,8 @@ interface NetworkService {
     @GET("top-headlines/sources")
     suspend fun getNewResources(): NewSourceResponse
 
+    @Headers("X-Api-Key: ${AppConstant.API_KEY}")
+    @GET("everything")
+    suspend fun getSearchResultForHeadLines(@Query("q") q: String): TopHeadLinesResponse
+
 }

@@ -20,6 +20,7 @@ import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.country_selection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.language_selection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.new_sources.NewSourcesActivity
+import com.sachin_singh_dighan.newsapp.ui.search_news.SearchNewsActivity
 import com.sachin_singh_dighan.newsapp.ui.top_headline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -109,7 +110,8 @@ class MainActivity : AppCompatActivity(){
                 startActivity(intent)
             }
             AppConstant.SEARCH ->{
-                Toast.makeText(this, sectionClicked, Toast.LENGTH_LONG).show()
+                val intent = Intent(this, SearchNewsActivity::class.java)
+                startActivity(intent)
             }
         }
 

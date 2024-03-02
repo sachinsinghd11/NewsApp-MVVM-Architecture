@@ -5,8 +5,12 @@ import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.di.ApplicationContext
 import com.sachin_singh_dighan.newsapp.di.BaseUrl
+import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
+import com.sachin_singh_dighan.newsapp.utils.RetryInterceptor
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -33,12 +37,14 @@ class ApplicationModule(private val application: NewsApplication) {
     fun provideNetworkService(
         @BaseUrl baseUrl: String,
         gsonConverterFactory: GsonConverterFactory
-    ): NetworkService{
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
-            .create(NetworkService::class.java)
+    ): NetworkService {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client = OkHttpClient.Builder().addInterceptor(AuthInterceptor())
+            .addInterceptor(loggingInterceptor).addInterceptor(RetryInterceptor(3)).build()
+        return Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(gsonConverterFactory)
+            .client(client).build().create(NetworkService::class.java)
     }
 
 }

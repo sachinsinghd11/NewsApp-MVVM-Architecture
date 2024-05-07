@@ -38,6 +38,7 @@ class MainActivityAdapter(
     }
 
     fun addData(list: List<MainSection>) {
+        mainSectionList.clear()
         mainSectionList.addAll(list)
     }
 

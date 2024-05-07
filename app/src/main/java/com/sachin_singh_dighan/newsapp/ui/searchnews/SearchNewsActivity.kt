@@ -34,12 +34,11 @@ class SearchNewsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchNewsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
-        searchNewsViewModel.setIsSearchTextEntered(false)
         super.onCreate(savedInstanceState)
         binding = ActivitySearchNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fetchSearchResultData()
         setupUI()
+        fetchSearchResultData()
         setupObserver()
 
     }
@@ -52,16 +51,15 @@ class SearchNewsActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        val recyclerView = binding.rvNewList
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
+        binding.rvNewList.layoutManager = LinearLayoutManager(this)
+        binding.rvNewList.addItemDecoration(
             DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
+                binding.rvNewList.context,
+                (binding.rvNewList.layoutManager as LinearLayoutManager).orientation
             )
         )
-        recyclerView.adapter = adapter
-        binding.messageTextView.visibility = View.VISIBLE
+        binding.rvNewList.adapter = adapter
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun setupObserver() {
@@ -75,24 +73,13 @@ class SearchNewsActivity : AppCompatActivity() {
                             binding.rvNewList.visibility = View.VISIBLE
                         }
                         is UiState.Loading -> {
-
-                            if(searchNewsViewModel.getIsSearchTextEntered() == true){
-                                binding.progressBar.visibility = View.VISIBLE
-                                binding.rvNewList.visibility = View.GONE
-                            }else{
-                                binding.progressBar.visibility = View.GONE
-                                binding.rvNewList.visibility = View.GONE
-                            }
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.rvNewList.visibility = View.GONE
                         }
                         is UiState.Error -> {
-                            if(searchNewsViewModel.getIsSearchTextEntered() == true){
-                                binding.rvNewList.visibility = View.GONE
-                                binding.progressBar.visibility = View.VISIBLE
-                                errorDialog.showResetPasswordDialog(this@SearchNewsActivity)
-                            }else{
-                                binding.rvNewList.visibility = View.GONE
-                                binding.progressBar.visibility = View.GONE
-                            }
+                            binding.rvNewList.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
+                            errorDialog.showResetPasswordDialog(this@SearchNewsActivity)
                         }
                     }
                 }
@@ -101,39 +88,26 @@ class SearchNewsActivity : AppCompatActivity() {
     }
 
 
-    private fun fetchSearchResultData(){
+    private fun fetchSearchResultData() {
         binding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                binding.messageTextView.visibility = View.GONE
-                searchNewsViewModel.fetchSearchResult(query)
-                adapter.notifyDataSetChanged()
-                return false
+                return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
-                if(newText.isEmpty()){
-                    searchNewsViewModel.setIsSearchTextEntered(false)
-                searchNewsViewModel.fetchSearchResult(newText)
-                adapter.notifyDataSetChanged()
-                    setupObserver()
-                    binding.messageTextView.visibility = View.VISIBLE
-                }else{
-                    searchNewsViewModel.setIsSearchTextEntered(true)
-                }
-
-                return false
+                searchNewsViewModel.searchQuery(newText)
+                return true
             }
         })
 
         binding.svSearch.setOnCloseListener {
-            searchNewsViewModel.setIsSearchTextEntered(true)
-            binding.svSearch.setQuery("",false)
-            binding.messageTextView.visibility = View.GONE
-            false
+            binding.progressBar.visibility = View.GONE
+            binding.rvNewList.visibility = View.GONE
+            true
         }
 
     }
 
-    private fun renderList(articleList:  List<Article>) {
+    private fun renderList(articleList: List<Article>) {
         adapter.addData(articleList)
         adapter.notifyDataSetChanged()
     }

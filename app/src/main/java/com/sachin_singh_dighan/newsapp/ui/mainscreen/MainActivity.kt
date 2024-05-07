@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity(){
 
     private fun renderList(mainSection: List<MainSection>){
         adapter.addData(mainSection)
+        adapter.notifyDataSetChanged()
     }
 
     private fun injectDependencies() {

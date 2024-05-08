@@ -9,19 +9,18 @@ import javax.inject.Singleton
 @Singleton
 interface NetworkService {
 
-    //@Headers("X-Api-Key: ${AppConstant.API_KEY}")
+    @GET("top-headlines")
+    suspend fun getNewsByResources(@Query("sources") source: String): TopHeadLinesResponse
+
     @GET("top-headlines")
     suspend fun getTopHeadLinesByCountry(@Query("country") country: String): TopHeadLinesResponse
 
-    //@Headers("X-Api-Key: ${AppConstant.API_KEY}")
     @GET("top-headlines")
     suspend fun getTopHeadLinesByLanguage(@Query("language") language: String): TopHeadLinesResponse
 
-    //@Headers("X-Api-Key: ${AppConstant.API_KEY}")
     @GET("top-headlines/sources")
     suspend fun getNewResources(): NewSourceResponse
 
-    //@Headers("X-Api-Key: ${AppConstant.API_KEY}")
     @GET("everything")
     suspend fun getSearchResultForHeadLines(@Query("q") q: String): TopHeadLinesResponse
 

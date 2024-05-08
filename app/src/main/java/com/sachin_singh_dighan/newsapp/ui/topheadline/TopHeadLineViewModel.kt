@@ -16,9 +16,13 @@ class TopHeadLineViewModel(private val topHeadLineRepository: TopHeadLineReposit
 
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
-    fun fetchNews(country: String,language: String = ""){
+    init {
+        fetchTopHeadlines()
+    }
+
+    private fun fetchTopHeadlines(){
         viewModelScope.launch {
-            topHeadLineRepository.getTopHeadLines(country, language)
+            topHeadLineRepository.getTopHeadLinesByDefault()
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect{

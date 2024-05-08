@@ -10,12 +10,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.databinding.ActivityCountrySelectionBinding
 import com.sachin_singh_dighan.newsapp.di.component.countryselection.DaggerCountrySelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.countryselection.CountrySelectionModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -88,10 +90,12 @@ class CountrySelectionActivity : AppCompatActivity() {
     }
 
     fun onCountryClick(countryCode: String) {
-        val bundle = Bundle()
-        bundle.putString(TopHeadLineActivity.COUNTRY_CODE, countryCode)
-        val intent = Intent(this, TopHeadLineActivity::class.java)
-        intent.putExtras(bundle)
-        startActivity(intent)
+        startActivity(
+            NewsListActivity.getInstance(
+                this@CountrySelectionActivity,
+                newsType = AppConstant.NEWS_BY_COUNTRY,
+                newsCountry = countryCode,
+            )
+        )
     }
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.ActivityNewSourcesBinding
@@ -17,6 +18,7 @@ import com.sachin_singh_dighan.newsapp.di.component.newsources.DaggerNewSourcesC
 import com.sachin_singh_dighan.newsapp.di.module.newsources.NewSourcesModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
+import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -89,9 +91,13 @@ class NewSourcesActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    fun onNewSourceItemClick(sourceClicked: Sources){
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
-        customTabsIntent.launchUrl(this, Uri.parse(sourceClicked.url))
+    fun onNewSourceItemClick(sourceClicked: Sources) {
+        startActivity(
+            NewsListActivity.getInstance(
+                this@NewSourcesActivity,
+                newsType = AppConstant.NEWS_BY_SOURCE,
+                newsSource = sourceClicked.id,
+            )
+        )
     }
 }

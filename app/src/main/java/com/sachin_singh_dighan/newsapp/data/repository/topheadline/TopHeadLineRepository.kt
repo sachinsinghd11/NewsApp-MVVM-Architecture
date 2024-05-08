@@ -1,5 +1,6 @@
 package com.sachin_singh_dighan.newsapp.data.repository.topheadline
 
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import kotlinx.coroutines.flow.Flow
@@ -10,13 +11,25 @@ import javax.inject.Singleton
 
 @Singleton
 class TopHeadLineRepository @Inject constructor(private  val networkService: NetworkService){
-    fun getTopHeadLines(country: String,language: String): Flow<List<Article>>{
+
+    fun getTopHeadLinesByDefault(): Flow<List<Article>>{
         return flow {
-            if (country.isNullOrEmpty()) {
-                emit(networkService.getTopHeadLinesByLanguage(language))
-            } else {
+            emit(networkService.getTopHeadLinesByCountry(AppConstant.NEWS_BY_DEFAULT))
+        }.map {
+            it.articles
+        }
+    }
+
+    fun getTopHeadLinesByCountry(country: String): Flow<List<Article>>{
+        return flow {
                 emit(networkService.getTopHeadLinesByCountry(country))
-            }
+        }.map {
+            it.articles
+        }
+    }
+    fun getTopHeadLinesByLanguage(language: String): Flow<List<Article>>{
+        return flow {
+                emit(networkService.getTopHeadLinesByLanguage(language))
         }.map {
             it.articles
         }

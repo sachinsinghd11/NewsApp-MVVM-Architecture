@@ -11,7 +11,13 @@ object AppConstant {
 
     //for network service
     const val API_KEY = "5e59e08053df4d13a5d4ff6fb1b228d0"
-    const val COUNTRY = "us"
+    const val COUNTRY = "in"
+
+    //keys for distinguishing between news type
+    const val NEWS_BY_DEFAULT = "in"
+    const val NEWS_BY_SOURCE = "News by source"
+    const val NEWS_BY_COUNTRY = "News by country"
+    const val NEWS_BY_LANGUAGE = "News by language"
 
     //Country name with code
 

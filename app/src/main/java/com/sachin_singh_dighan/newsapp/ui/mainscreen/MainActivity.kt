@@ -25,7 +25,7 @@ import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var mainViewModel: MainViewModel
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun setUi() {
-    val recyclerView = binding.mainRecyclerView
+        val recyclerView = binding.mainRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -56,20 +56,22 @@ class MainActivity : AppCompatActivity(){
         recyclerView.adapter = adapter
     }
 
-    private fun setupObserver(){
+    private fun setupObserver() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                mainViewModel.uiState.collect(){
-                    when(it){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.uiState.collect() {
+                    when (it) {
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             renderList(it.data)
                             binding.mainRecyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.mainRecyclerView.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG)
@@ -81,7 +83,7 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun renderList(mainSection: List<MainSection>){
+    private fun renderList(mainSection: List<MainSection>) {
         adapter.addData(mainSection)
         adapter.notifyDataSetChanged()
     }
@@ -92,25 +94,33 @@ class MainActivity : AppCompatActivity(){
             .mainActivityModule(MainActivityModule(this)).build().inject(this)
     }
 
-    fun onMainSectionItemClick(sectionClicked: String){
-        when (sectionClicked){
-            AppConstant.TOP_HEADLINES ->{
-                val intent = Intent(this, TopHeadLineActivity::class.java)
-                startActivity(intent)
+    fun onMainSectionItemClick(sectionClicked: String) {
+        when (sectionClicked) {
+            AppConstant.TOP_HEADLINES -> {
+                startActivity(
+                    TopHeadLineActivity.getInstance(
+                        this@MainActivity,
+                        AppConstant.NEWS_BY_DEFAULT
+                    )
+                )
             }
-            AppConstant.NEWS_SOURCES ->{
+
+            AppConstant.NEWS_SOURCES -> {
                 val intent = Intent(this, NewSourcesActivity::class.java)
                 startActivity(intent)
             }
-            AppConstant.COUNTRIES ->{
+
+            AppConstant.COUNTRIES -> {
                 val intent = Intent(this, CountrySelectionActivity::class.java)
                 startActivity(intent)
             }
-            AppConstant.LANGUAGES ->{
+
+            AppConstant.LANGUAGES -> {
                 val intent = Intent(this, LanguageSelectionActivity::class.java)
                 startActivity(intent)
             }
-            AppConstant.SEARCH ->{
+
+            AppConstant.SEARCH -> {
                 val intent = Intent(this, SearchNewsActivity::class.java)
                 startActivity(intent)
             }

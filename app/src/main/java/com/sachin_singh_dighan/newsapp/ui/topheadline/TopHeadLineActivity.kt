@@ -1,5 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.topheadline
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,17 @@ import javax.inject.Inject
 
 class TopHeadLineActivity : AppCompatActivity() {
 
+
+    companion object {
+        private const val HEADLINE_TYPE = "Headline type"
+        fun getInstance(context: Context, headLineSource: String): Intent{
+            return Intent(context, TopHeadLineActivity::class.java)
+                .apply {
+                    putExtra(HEADLINE_TYPE, headLineSource)
+                }
+        }
+    }
+
     @Inject
     lateinit var newsListViewModel: TopHeadLineViewModel
 
@@ -32,28 +45,14 @@ class TopHeadLineActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTopHeadLineBinding
 
-    companion object {
-        const val COUNTRY_CODE = "country code"
-        const val LANGUAGE_CODE = "language code"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityTopHeadLineBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fetchNewsData()
         setupUI()
         setupObserver()
-    }
-
-    private fun fetchNewsData(){
-        val bundle = intent.extras
-        if (bundle != null){
-            newsListViewModel.fetchNews(bundle.getString(COUNTRY_CODE)?:"", bundle.getString(LANGUAGE_CODE)?:"")
-        }else{
-            newsListViewModel.fetchNews(AppConstant.COUNTRY)
-        }
     }
 
     private fun setupObserver() {

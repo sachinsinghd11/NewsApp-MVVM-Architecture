@@ -72,7 +72,7 @@ class TopHeadLineActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@TopHeadLineActivity)
+                            errorDialog.showResetPasswordDialog(this@TopHeadLineActivity, it.message,)
                         }
                     }
                 }

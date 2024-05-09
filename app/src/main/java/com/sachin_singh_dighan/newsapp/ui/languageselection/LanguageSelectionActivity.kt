@@ -17,6 +17,7 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityLanguageSelectionBind
 import com.sachin_singh_dighan.newsapp.di.component.languageselection.DaggerLanguageSelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.languageselection.LanguageSelectionModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
@@ -29,6 +30,9 @@ class LanguageSelectionActivity : AppCompatActivity() {
 
     @Inject
     lateinit var adapter: LanguageSelectionAdapter
+
+    @Inject
+    lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityLanguageSelectionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,9 +77,9 @@ class LanguageSelectionActivity : AppCompatActivity() {
                             binding.languageRecyclerView.visibility = View.GONE
                         }
                         is UiState.Error -> {
+                            //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@LanguageSelectionActivity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            errorDialog.showResetPasswordDialog(this@LanguageSelectionActivity, it.message,)
                         }
                     }
                 }

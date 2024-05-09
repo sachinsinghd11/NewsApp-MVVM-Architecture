@@ -19,6 +19,9 @@ object AppConstant {
     const val NEWS_BY_COUNTRY = "News by country"
     const val NEWS_BY_LANGUAGE = "News by language"
 
+    //Network error msg
+    const val NETWORK_ERROR = "Please Check Network Connection"
+
     //Country name with code
 
     const val UNITED_ARAB_EMIRATES = "United Arab Emirates"

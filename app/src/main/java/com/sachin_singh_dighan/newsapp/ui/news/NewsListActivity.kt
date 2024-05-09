@@ -129,7 +129,7 @@ class NewsListActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@NewsListActivity)
+                            errorDialog.showResetPasswordDialog(this@NewsListActivity, it.message,)
                         }
                     }
                 }

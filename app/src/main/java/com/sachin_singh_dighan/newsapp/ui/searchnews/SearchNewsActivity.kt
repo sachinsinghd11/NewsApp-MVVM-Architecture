@@ -79,7 +79,7 @@ class SearchNewsActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             binding.rvNewList.visibility = View.GONE
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@SearchNewsActivity)
+                            errorDialog.showResetPasswordDialog(this@SearchNewsActivity, it.message,)
                         }
                     }
                 }

@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.sachin_singh_dighan.newsapp.data.repository.languageselection.LanguageSelectionRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionAdapter
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionViewModel
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 
@@ -16,19 +18,24 @@ class LanguageSelectionModule(private val activity: LanguageSelectionActivity) {
 
     @ActivityContext
     @Provides
-    fun provideContext(): Context{
+    fun provideContext(): Context {
         return activity
     }
 
     @Provides
-    fun provideLanguageSelectionViewModel(languageSelectionRepository: LanguageSelectionRepository): LanguageSelectionViewModel {
+    fun provideLanguageSelectionViewModel(
+        languageSelectionRepository: LanguageSelectionRepository,
+        networkHelper: NetworkHelper,
+    ): LanguageSelectionViewModel {
         return ViewModelProvider(activity,
             ViewModelProviderFactory(LanguageSelectionViewModel::class) {
-                LanguageSelectionViewModel(languageSelectionRepository)
+                LanguageSelectionViewModel(languageSelectionRepository, networkHelper,)
             })[LanguageSelectionViewModel::class.java]
     }
 
     @Provides
     fun provideCountrySelectionAdapter() = LanguageSelectionAdapter(ArrayList(), activity)
 
+    @Provides
+    fun provideErrorDialog() = ErrorDialog()
 }

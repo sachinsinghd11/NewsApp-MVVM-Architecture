@@ -3,9 +3,11 @@ package com.sachin_singh_dighan.newsapp.ui.searchnews
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.data.repository.searchnews.SearchNewsRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +20,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-class SearchNewsViewModel(private val searchNewsRepository: SearchNewsRepository) : ViewModel() {
+class SearchNewsViewModel(
+    private val searchNewsRepository: SearchNewsRepository,
+    private val networkHelper: NetworkHelper,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
 
@@ -36,32 +41,37 @@ class SearchNewsViewModel(private val searchNewsRepository: SearchNewsRepository
 
     private fun getQueryTextChangeStateFlow() {
         viewModelScope.launch {
-            query.debounce(2000)
-                .filter {
-                    if(it.isNotEmpty() && it.count()>=3){
-                        return@filter true
-                    }else{
-                        _uiState.value = UiState.Success(emptyList())
-                        return@filter false
-                    }
-
-                }
-                .distinctUntilChanged()
-                .flatMapLatest { searchTerm ->
-                    _uiState.value = UiState.Loading
-                    return@flatMapLatest searchNewsRepository.getSearchForHeadLines(searchTerm)
-                        .catch { e ->
-                            _uiState.value = UiState.Error(e.toString())
+            if (networkHelper.isNetworkAvailable()) {
+                query.debounce(2000)
+                    .filter {
+                        if (it.isNotEmpty() && it.count() >= 3) {
+                            return@filter true
+                        } else {
+                            _uiState.value = UiState.Success(emptyList())
+                            return@filter false
                         }
-                }
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    if(it.isNotEmpty()){
-                        _uiState.value = UiState.Success(it)
-                    }else{
-                        _uiState.value = UiState.Error("No Data Found")
+
                     }
-                }
+                    .distinctUntilChanged()
+                    .flatMapLatest { searchTerm ->
+                        _uiState.value = UiState.Loading
+                        return@flatMapLatest searchNewsRepository.getSearchForHeadLines(searchTerm)
+                            .catch { e ->
+                                _uiState.value = UiState.Error(e.toString())
+                            }
+                    }
+                    .flowOn(Dispatchers.IO)
+                    .collect {
+                        if (it.isNotEmpty()) {
+                            _uiState.value = UiState.Success(it)
+                        } else {
+                            _uiState.value = UiState.Error("No Data Found")
+                        }
+                    }
+            } else {
+                _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)
+            }
+
         }
     }
 }

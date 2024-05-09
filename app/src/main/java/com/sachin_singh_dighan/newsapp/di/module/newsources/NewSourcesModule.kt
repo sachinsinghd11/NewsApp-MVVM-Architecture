@@ -9,6 +9,7 @@ import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesAdapter
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesViewModel
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 
@@ -22,10 +23,13 @@ class NewSourcesModule(private val activity: NewSourcesActivity) {
     }
 
     @Provides
-    fun providesNewSourceViewModel(newSourcesRepository: NewSourcesRepository): NewSourcesViewModel {
+    fun providesNewSourceViewModel(
+        newSourcesRepository: NewSourcesRepository,
+        networkHelper: NetworkHelper,
+    ): NewSourcesViewModel {
         return ViewModelProvider(activity,
-            ViewModelProviderFactory(NewSourcesViewModel::class){
-                NewSourcesViewModel(newSourcesRepository)
+            ViewModelProviderFactory(NewSourcesViewModel::class) {
+                NewSourcesViewModel(newSourcesRepository, networkHelper)
             }
         )[NewSourcesViewModel::class.java]
     }

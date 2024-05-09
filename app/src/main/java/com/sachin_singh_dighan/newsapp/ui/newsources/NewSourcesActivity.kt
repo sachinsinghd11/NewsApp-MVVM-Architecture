@@ -60,7 +60,7 @@ class NewSourcesActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@NewSourcesActivity)
+                            errorDialog.showResetPasswordDialog(this@NewSourcesActivity, it.message,)
                         }
                     }
                 }

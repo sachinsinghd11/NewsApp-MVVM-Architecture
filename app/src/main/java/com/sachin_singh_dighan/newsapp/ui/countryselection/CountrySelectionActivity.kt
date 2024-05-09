@@ -17,6 +17,7 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityCountrySelectionBindi
 import com.sachin_singh_dighan.newsapp.di.component.countryselection.DaggerCountrySelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.countryselection.CountrySelectionModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
@@ -29,6 +30,9 @@ class CountrySelectionActivity : AppCompatActivity() {
 
     @Inject
     lateinit var adapter: CountrySelectionAdapter
+
+    @Inject
+    lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityCountrySelectionBinding
 
@@ -74,9 +78,9 @@ class CountrySelectionActivity : AppCompatActivity() {
                             binding.mainRecyclerView.visibility = View.GONE
                         }
                         is UiState.Error -> {
+                            //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@CountrySelectionActivity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            errorDialog.showResetPasswordDialog(this@CountrySelectionActivity, it.message,)
                         }
                     }
                 }

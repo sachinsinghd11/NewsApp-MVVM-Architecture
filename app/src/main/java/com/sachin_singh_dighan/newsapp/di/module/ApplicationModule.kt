@@ -6,6 +6,8 @@ import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.di.ApplicationContext
 import com.sachin_singh_dighan.newsapp.di.BaseUrl
 import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelperImpl
 import com.sachin_singh_dighan.newsapp.utils.RetryInterceptor
 import dagger.Module
 import dagger.Provides
@@ -45,6 +47,13 @@ class ApplicationModule(private val application: NewsApplication) {
             .addInterceptor(loggingInterceptor).addInterceptor(RetryInterceptor(3)).build()
         return Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(gsonConverterFactory)
             .client(client).build().create(NetworkService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper{
+        return NetworkHelperImpl(context)
     }
 
 }

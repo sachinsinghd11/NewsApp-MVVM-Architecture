@@ -9,6 +9,7 @@ import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsViewModel
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
+import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 
@@ -21,10 +22,13 @@ class SearchNewsModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun providesSearchNewsViewModel(searchNewsRepository: SearchNewsRepository): SearchNewsViewModel {
+    fun providesSearchNewsViewModel(
+        searchNewsRepository: SearchNewsRepository,
+        networkHelper: NetworkHelper
+    ): SearchNewsViewModel {
         return ViewModelProvider(activity,
-            ViewModelProviderFactory(SearchNewsViewModel::class){
-                SearchNewsViewModel(searchNewsRepository)
+            ViewModelProviderFactory(SearchNewsViewModel::class) {
+                SearchNewsViewModel(searchNewsRepository, networkHelper)
             }
         )[SearchNewsViewModel::class.java]
     }

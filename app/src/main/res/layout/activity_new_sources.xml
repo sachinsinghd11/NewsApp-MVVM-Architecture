@@ -8,7 +8,7 @@
     android:layout_marginEnd="36dp"
     android:layout_marginTop="42dp"
     android:layout_marginBottom="42dp"
-    tools:context=".ui.newsources.NewSourcesActivity">
+    tools:context=".ui.newsources.NewsSourcesActivity">
 
     <TextView
         android:id="@+id/new_source_heading"

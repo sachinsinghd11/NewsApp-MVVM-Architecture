@@ -8,12 +8,12 @@ import com.sachin_singh_dighan.newsapp.databinding.NewSourceItemRowBinding
 
 class NewSourcesAdapter (
     private val newResourceList: ArrayList<Sources>,
-    private val newSourceActivity: NewSourcesActivity,
+    private val newSourceActivity: NewsSourcesActivity,
 ): RecyclerView.Adapter<NewSourcesAdapter.NewSourceViewHolder>() {
 
     class NewSourceViewHolder(
         private val binding: NewSourceItemRowBinding,
-        private val newSourceActivity: NewSourcesActivity
+        private val newSourceActivity: NewsSourcesActivity
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(sources: Sources) {
             binding.newSourceElement.text = sources.name

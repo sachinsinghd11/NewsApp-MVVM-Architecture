@@ -19,7 +19,7 @@ import com.sachin_singh_dighan.newsapp.di.module.mainscreen.MainActivityModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
-import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesActivity
+import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
@@ -106,22 +106,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             AppConstant.NEWS_SOURCES -> {
-                val intent = Intent(this, NewSourcesActivity::class.java)
+                val intent = Intent(this@MainActivity, NewsSourcesActivity::class.java)
                 startActivity(intent)
             }
 
             AppConstant.COUNTRIES -> {
-                val intent = Intent(this, CountrySelectionActivity::class.java)
+                val intent = Intent(this@MainActivity, CountrySelectionActivity::class.java)
                 startActivity(intent)
             }
 
             AppConstant.LANGUAGES -> {
-                val intent = Intent(this, LanguageSelectionActivity::class.java)
+                val intent = Intent(this@MainActivity, LanguageSelectionActivity::class.java)
                 startActivity(intent)
             }
 
             AppConstant.SEARCH -> {
-                val intent = Intent(this, SearchNewsActivity::class.java)
+                val intent = Intent(this@MainActivity, SearchNewsActivity::class.java)
                 startActivity(intent)
             }
         }

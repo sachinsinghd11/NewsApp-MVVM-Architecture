@@ -2,6 +2,7 @@ package com.sachin_singh_dighan.newsapp.data.api
 
 import com.sachin_singh_dighan.newsapp.data.model.newsources.NewSourceResponse
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.TopHeadLinesResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Query
 import javax.inject.Singleton

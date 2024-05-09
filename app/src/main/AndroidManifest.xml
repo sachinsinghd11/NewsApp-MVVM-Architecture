@@ -29,7 +29,7 @@
             android:name=".ui.countryselection.CountrySelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.newsources.NewSourcesActivity"
+            android:name=".ui.newsources.NewsSourcesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.topheadline.TopHeadLineActivity"

@@ -9,6 +9,7 @@ import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRe
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
+import com.sachin_singh_dighan.newsapp.ui.news.NewsListAdapter
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListViewModel
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineViewModel
@@ -43,7 +44,7 @@ class NewsListModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideTopHeadLineAdapter() = TopHeadLineAdapter(ArrayList())
+    fun provideTopHeadLineAdapter() = NewsListAdapter(ArrayList())
 
     @Provides
     fun provideErrorDialog() = ErrorDialog()

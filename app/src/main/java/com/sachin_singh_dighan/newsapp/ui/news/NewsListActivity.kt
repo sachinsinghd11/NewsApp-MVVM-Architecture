@@ -3,6 +3,7 @@ package com.sachin_singh_dighan.newsapp.ui.news
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -17,7 +18,10 @@ import com.sachin_singh_dighan.newsapp.databinding.ActivityNewsListBinding
 import com.sachin_singh_dighan.newsapp.di.component.news.DaggerNewsListComponent
 import com.sachin_singh_dighan.newsapp.di.module.news.NewsListModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
+import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
+import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,15 +40,14 @@ class NewsListActivity : AppCompatActivity() {
             newsType: String,
             newsSource: String? = "",
             newsCountry: String? = "",
-            newsLanguage: String? = "",
+            newsLanguage: ArrayList<String> = arrayListOf(),
         ): Intent {
             return Intent(context, NewsListActivity::class.java).apply {
                 putExtra(NEWS_TYPE, newsType)
                 putExtra(NEWS_SOURCE, newsSource)
                 putExtra(NEWS_COUNTRY, newsCountry)
-                putExtra(NEWS_LANGUAGE, newsLanguage)
+                putStringArrayListExtra(NEWS_LANGUAGE, newsLanguage)
             }
-
         }
     }
 
@@ -52,7 +55,7 @@ class NewsListActivity : AppCompatActivity() {
     lateinit var newsListViewModel: NewsListViewModel
 
     @Inject
-    lateinit var adapter: TopHeadLineAdapter
+    lateinit var adapter: NewsListAdapter
 
     @Inject
     lateinit var errorDialog: ErrorDialog
@@ -88,10 +91,15 @@ class NewsListActivity : AppCompatActivity() {
                     }
 
                     AppConstant.NEWS_BY_LANGUAGE -> {
-                        val language = getString(NEWS_LANGUAGE)
-                        language?.let {
-                            newsListViewModel.fetchNewsByLanguage(it)
+                        try{
+                            val language = getStringArrayList(NEWS_LANGUAGE)
+                            language?.let {
+                                newsListViewModel.fetchNewsByLanguage(it)
+                            }
+                        }catch (e: Exception){
+                            Log.d("NewsListActivity", e.toString())
                         }
+
                     }
                 }
             }
@@ -146,5 +154,27 @@ class NewsListActivity : AppCompatActivity() {
         DaggerNewsListComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
             .newsListModule(NewsListModule(this)).build().inject(this)
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        intent.extras?.apply {
+            val newsType = getString(NEWS_TYPE)
+            newsType?.let { type ->
+                when (type) {
+                    AppConstant.NEWS_BY_SOURCE -> {
+                        startActivity(NewsSourcesActivity.getInstance(this@NewsListActivity))
+                    }
+                    AppConstant.NEWS_BY_COUNTRY -> {
+                        startActivity(CountrySelectionActivity.getInstance(this@NewsListActivity))
+                    }
+                    AppConstant.NEWS_BY_LANGUAGE -> {
+                        startActivity(LanguageSelectionActivity.getInstance(this@NewsListActivity, true))
+                    }
+                }
+            }
+        }
+
     }
 }

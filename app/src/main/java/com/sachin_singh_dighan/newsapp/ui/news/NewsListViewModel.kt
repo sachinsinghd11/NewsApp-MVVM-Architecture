@@ -8,10 +8,16 @@ import com.sachin_singh_dighan.newsapp.data.repository.news.NewsListRepository
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class NewsListViewModel(
     private val newsListRepository: NewsListRepository,
@@ -55,10 +61,18 @@ class NewsListViewModel(
         }
     }
 
-    fun fetchNewsByLanguage(language: String) {
+    fun fetchNewsByLanguage(language: ArrayList<String>) {
         viewModelScope.launch {
             if (networkHelper.isNetworkAvailable()) {
-                topHeadLineRepository.getTopHeadLinesByLanguage(language)
+                val selectedLanguagesList = mutableListOf<Article>()
+                topHeadLineRepository.getTopHeadLinesByLanguage(language[0])
+                    .zip(topHeadLineRepository.getTopHeadLinesByLanguage(language[1])) { language1, language2 ->
+                        val seed = Random.nextInt()
+                        selectedLanguagesList.addAll(language1)
+                        selectedLanguagesList.addAll(language2)
+                        selectedLanguagesList.shuffled(Random(seed))
+                    }.
+                    flowOn(Dispatchers.IO)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
                     }.collect {
@@ -67,7 +81,6 @@ class NewsListViewModel(
             } else {
                 _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)
             }
-
         }
     }
 }

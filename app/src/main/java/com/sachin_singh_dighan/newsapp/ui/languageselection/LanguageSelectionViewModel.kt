@@ -18,8 +18,8 @@ class LanguageSelectionViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<LanguageData>>>(UiState.Loading)
-
     val uiState: StateFlow<UiState<List<LanguageData>>> = _uiState
+    val languageCodeSet = mutableSetOf<String>()
 
     init {
         getLanguageData()

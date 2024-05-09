@@ -3,6 +3,7 @@ package com.sachin_singh_dighan.newsapp.ui.languageselection
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sachin_singh_dighan.newsapp.R
 import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.LanguageSelectionItemRowBinding
@@ -23,6 +24,7 @@ class LanguageSelectionAdapter (
             itemView.setOnClickListener { onLanguageItemClick(languageData.languageName, languageData.languageCode) }
         }
         private fun onLanguageItemClick(countryName: String, countryCode: String ){
+            binding.languageSectionElement.setBackgroundResource(R.color.selected_language)
             activity.onLanguageClick(countryCode)
         }
     }

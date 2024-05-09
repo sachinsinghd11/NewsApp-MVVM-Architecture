@@ -18,8 +18,23 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:gravity="center"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/new_source_sub_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/new_source_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/language_selection_subtitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:gravity="center"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@+id/new_source_heading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/language_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
@@ -27,9 +42,10 @@
         android:id="@+id/language_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_source_heading"
+        app:layout_constraintTop_toBottomOf="@+id/new_source_sub_title"
         android:foregroundGravity="top"/>
 
     <ProgressBar

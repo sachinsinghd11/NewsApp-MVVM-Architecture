@@ -6,7 +6,7 @@ import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewSourcesRepo
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
 import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
-import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesActivity
+import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesAdapter
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewSourcesViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
@@ -14,7 +14,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class NewSourcesModule(private val activity: NewSourcesActivity) {
+class NewSourcesModule(private val activity: NewsSourcesActivity) {
 
     @ActivityContext
     @Provides

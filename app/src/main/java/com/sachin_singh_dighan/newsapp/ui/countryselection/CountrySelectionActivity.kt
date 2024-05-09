@@ -1,10 +1,10 @@
 package com.sachin_singh_dighan.newsapp.ui.countryselection
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,8 +18,8 @@ import com.sachin_singh_dighan.newsapp.di.component.countryselection.DaggerCount
 import com.sachin_singh_dighan.newsapp.di.module.countryselection.CountrySelectionModule
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
+import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
-import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,6 +35,12 @@ class CountrySelectionActivity : AppCompatActivity() {
     lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityCountrySelectionBinding
+
+    companion object {
+        fun getInstance(context: Context): Intent {
+            return Intent(context, CountrySelectionActivity::class.java)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
@@ -99,7 +105,9 @@ class CountrySelectionActivity : AppCompatActivity() {
                 this@CountrySelectionActivity,
                 newsType = AppConstant.NEWS_BY_COUNTRY,
                 newsCountry = countryCode,
+
             )
         )
+        finish()
     }
 }

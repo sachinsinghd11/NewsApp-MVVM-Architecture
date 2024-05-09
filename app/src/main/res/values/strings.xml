@@ -4,4 +4,5 @@
     <string name="popup_sub_title">Something went wrong. Try once again</string>
     <string name="search_hint">Search</string>
     <string name="search_message">Enter text to search</string>
+    <string name="language_selection_subtitle">Select any two languages</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.sachin_singh_dighan.newsapp.ui.newsources
 
-import android.net.Uri
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,7 +22,7 @@ import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewSourcesActivity : AppCompatActivity() {
+class NewsSourcesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var newSourceListViewModel: NewSourcesViewModel
@@ -34,6 +34,13 @@ class NewSourcesActivity : AppCompatActivity() {
     lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityNewSourcesBinding
+
+    companion object {
+        fun getInstance(context: Context): Intent {
+            return Intent(context, NewsSourcesActivity::class.java)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
@@ -60,7 +67,7 @@ class NewSourcesActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@NewSourcesActivity, it.message,)
+                            errorDialog.showResetPasswordDialog(this@NewsSourcesActivity, it.message,)
                         }
                     }
                 }
@@ -94,10 +101,11 @@ class NewSourcesActivity : AppCompatActivity() {
     fun onNewSourceItemClick(sourceClicked: Sources) {
         startActivity(
             NewsListActivity.getInstance(
-                this@NewSourcesActivity,
+                this@NewsSourcesActivity,
                 newsType = AppConstant.NEWS_BY_SOURCE,
                 newsSource = sourceClicked.id,
             )
         )
+        finish()
     }
 }

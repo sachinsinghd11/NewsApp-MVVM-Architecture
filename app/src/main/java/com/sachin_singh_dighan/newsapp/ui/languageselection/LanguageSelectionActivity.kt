@@ -1,10 +1,10 @@
 package com.sachin_singh_dighan.newsapp.ui.languageselection
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,7 +19,6 @@ import com.sachin_singh_dighan.newsapp.di.module.languageselection.LanguageSelec
 import com.sachin_singh_dighan.newsapp.ui.base.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
-import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,11 +34,22 @@ class LanguageSelectionActivity : AppCompatActivity() {
     lateinit var errorDialog: ErrorDialog
 
     private lateinit var binding: ActivityLanguageSelectionBinding
+    companion object {
+        const val BACK_PRESSED = "Back Pressed"
+        fun getInstance(context: Context, isBackPressed: Boolean = false): Intent{
+            return Intent(context, LanguageSelectionActivity::class.java).apply {
+                putExtra(BACK_PRESSED, isBackPressed)
+            }
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        clearLanguageSelectedList()
         setUi()
         setupObserver()
     }
@@ -62,24 +72,39 @@ class LanguageSelectionActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
+    private fun clearLanguageSelectedList(){
+        intent.extras?.apply {
+            val isBackPressed = getBoolean(BACK_PRESSED)
+            if(isBackPressed){
+                languageSelectionViewModel.languageCodeSet.clear()
+            }
+        }
+
+    }
+
     private fun setupObserver() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                languageSelectionViewModel.uiState.collect(){
-                    when(it){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                languageSelectionViewModel.uiState.collect() {
+                    when (it) {
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             renderList(it.data)
                             binding.languageRecyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.languageRecyclerView.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@LanguageSelectionActivity, it.message,)
+                            errorDialog.showResetPasswordDialog(
+                                this@LanguageSelectionActivity,
+                                it.message,
+                            )
                         }
                     }
                 }
@@ -87,16 +112,23 @@ class LanguageSelectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun renderList(languageData: List<LanguageData>){
+    private fun renderList(languageData: List<LanguageData>) {
         adapter.addData(languageData)
     }
+
     fun onLanguageClick(languageCode: String) {
-        startActivity(
-            NewsListActivity.getInstance(
-                this@LanguageSelectionActivity,
-                newsType = AppConstant.NEWS_BY_LANGUAGE,
-                newsLanguage = languageCode,
+        languageSelectionViewModel.languageCodeSet.add(languageCode)
+        val languageCodeList = arrayListOf<String>()
+        languageCodeList.addAll(languageSelectionViewModel.languageCodeSet)
+        if (languageCodeList.size == 2) {
+            startActivity(
+                NewsListActivity.getInstance(
+                    this@LanguageSelectionActivity,
+                    newsType = AppConstant.NEWS_BY_LANGUAGE,
+                    newsLanguage = languageCodeList,
+                )
             )
-        )
+            finish()
+        }
     }
 }

@@ -7,9 +7,11 @@ import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelect
 import com.sachin_singh_dighan.newsapp.data.repository.countryselection.CountrySelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class CountrySelectionViewModel(
@@ -29,6 +31,7 @@ class CountrySelectionViewModel(
         viewModelScope.launch {
             if (networkHelper.isNetworkAvailable()) {
                 countrySelectionRepository.getDataForCountry()
+                    .flowOn(Dispatchers.Default)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
                     }.collect {

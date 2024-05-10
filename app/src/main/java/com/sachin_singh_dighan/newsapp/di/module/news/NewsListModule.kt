@@ -41,7 +41,7 @@ class NewsListModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideTopHeadLineAdapter() = NewsListAdapter(ArrayList())
+    fun provideNewsListAdapter() = NewsListAdapter(ArrayList())
 
     @Provides
     fun provideErrorDialog() = ErrorDialog()

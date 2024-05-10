@@ -16,7 +16,7 @@ import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.ActivityMainBinding
 import com.sachin_singh_dighan.newsapp.di.component.mainscreen.DaggerMainActivityComponent
 import com.sachin_singh_dighan.newsapp.di.module.mainscreen.MainActivityModule
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity

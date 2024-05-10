@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,13 +17,14 @@ import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import com.sachin_singh_dighan.newsapp.databinding.ActivityLanguageSelectionBinding
 import com.sachin_singh_dighan.newsapp.di.component.languageselection.DaggerLanguageSelectionComponent
 import com.sachin_singh_dighan.newsapp.di.module.languageselection.LanguageSelectionModule
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.base.BaseActivity
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LanguageSelectionActivity : AppCompatActivity() {
+class LanguageSelectionActivity : BaseActivity<ActivityLanguageSelectionBinding>() {
 
     @Inject
     lateinit var languageSelectionViewModel: LanguageSelectionViewModel
@@ -33,7 +35,6 @@ class LanguageSelectionActivity : AppCompatActivity() {
     @Inject
     lateinit var errorDialog: ErrorDialog
 
-    private lateinit var binding: ActivityLanguageSelectionBinding
     companion object {
         const val BACK_PRESSED = "Back Pressed"
         fun getInstance(context: Context, isBackPressed: Boolean = false): Intent{
@@ -44,23 +45,20 @@ class LanguageSelectionActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
-        super.onCreate(savedInstanceState)
-        binding = ActivityLanguageSelectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        clearLanguageSelectedList()
-        setUi()
-        setupObserver()
-    }
-
-    private fun injectDependencies() {
+    override fun injectDependencies() {
         DaggerLanguageSelectionComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
             .languageSelectionModule(LanguageSelectionModule(this)).build().inject(this)
     }
 
-    private fun setUi() {
+    override fun setUpViewBinding(inflate: LayoutInflater): ActivityLanguageSelectionBinding {
+        return ActivityLanguageSelectionBinding.inflate(layoutInflater)
+    }
+
+
+
+    override fun setupUI(savedInstanceState: Bundle?) {
+        clearLanguageSelectedList()
         val recyclerView = binding.languageRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
@@ -72,17 +70,7 @@ class LanguageSelectionActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    private fun clearLanguageSelectedList(){
-        intent.extras?.apply {
-            val isBackPressed = getBoolean(BACK_PRESSED)
-            if(isBackPressed){
-                languageSelectionViewModel.languageCodeSet.clear()
-            }
-        }
-
-    }
-
-    private fun setupObserver() {
+    override fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 languageSelectionViewModel.uiState.collect() {
@@ -110,6 +98,16 @@ class LanguageSelectionActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun clearLanguageSelectedList(){
+        intent.extras?.apply {
+            val isBackPressed = getBoolean(BACK_PRESSED)
+            if(isBackPressed){
+                languageSelectionViewModel.languageCodeSet.clear()
+            }
+        }
+
     }
 
     private fun renderList(languageData: List<LanguageData>) {

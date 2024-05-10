@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp.ui.base
+package com.sachin_singh_dighan.newsapp.ui.common
 
 sealed interface UiState<out T> {
 

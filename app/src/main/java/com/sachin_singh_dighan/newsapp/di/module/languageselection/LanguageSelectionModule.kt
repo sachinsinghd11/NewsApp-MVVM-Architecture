@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.sachin_singh_dighan.newsapp.data.repository.languageselection.LanguageSelectionRepository
 import com.sachin_singh_dighan.newsapp.di.ActivityContext
-import com.sachin_singh_dighan.newsapp.ui.base.ViewModelProviderFactory
+import com.sachin_singh_dighan.newsapp.ui.common.ViewModelProviderFactory
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionAdapter

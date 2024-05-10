@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewSourcesRepository
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class NewSourcesViewModel(
+class NewsSourcesViewModel(
     private val newSourcesRepository: NewSourcesRepository,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {

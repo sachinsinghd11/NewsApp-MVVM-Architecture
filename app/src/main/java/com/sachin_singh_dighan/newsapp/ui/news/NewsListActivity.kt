@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -17,16 +18,16 @@ import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.databinding.ActivityNewsListBinding
 import com.sachin_singh_dighan.newsapp.di.component.news.DaggerNewsListComponent
 import com.sachin_singh_dighan.newsapp.di.module.news.NewsListModule
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.base.BaseActivity
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
-import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsListActivity : AppCompatActivity() {
+class NewsListActivity : BaseActivity<ActivityNewsListBinding>() {
 
     companion object {
         private const val NEWS_TYPE = "News Type"
@@ -60,15 +61,55 @@ class NewsListActivity : AppCompatActivity() {
     @Inject
     lateinit var errorDialog: ErrorDialog
 
-    private lateinit var binding: ActivityNewsListBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
-        super.onCreate(savedInstanceState)
-        binding = ActivityNewsListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun injectDependencies() {
+        DaggerNewsListComponent.builder()
+            .applicationComponent((application as NewsApplication).applicationComponent)
+            .newsListModule(NewsListModule(this)).build().inject(this)
+    }
+
+    override fun setUpViewBinding(inflate: LayoutInflater): ActivityNewsListBinding {
+        return ActivityNewsListBinding.inflate(layoutInflater)
+    }
+
+    override fun setupUI(savedInstanceState: Bundle?) {
+        val recyclerView = binding.recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context,
+                (recyclerView.layoutManager as LinearLayoutManager).orientation
+            )
+        )
+        recyclerView.adapter = adapter
+
         fetchNewsData()
-        setupUI()
-        setupObserver()
+    }
+
+    override fun setupObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                newsListViewModel.uiState.collect {
+                    when (it) {
+                        is UiState.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            renderList(it.data)
+                            binding.recyclerView.visibility = View.VISIBLE
+                        }
+
+                        is UiState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
+                        }
+
+                        is UiState.Error -> {
+                            //Handle Error
+                            binding.progressBar.visibility = View.GONE
+                            errorDialog.showResetPasswordDialog(this@NewsListActivity, it.message,)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun fetchNewsData() {
@@ -106,54 +147,9 @@ class NewsListActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupUI() {
-        val recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
-        recyclerView.adapter = adapter
-    }
-
-    private fun setupObserver() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                newsListViewModel.uiState.collect {
-                    when (it) {
-                        is UiState.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            renderList(it.data)
-                            binding.recyclerView.visibility = View.VISIBLE
-                        }
-
-                        is UiState.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                            binding.recyclerView.visibility = View.GONE
-                        }
-
-                        is UiState.Error -> {
-                            //Handle Error
-                            binding.progressBar.visibility = View.GONE
-                            errorDialog.showResetPasswordDialog(this@NewsListActivity, it.message,)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun renderList(articleList: List<Article>) {
         adapter.addData(articleList)
         adapter.notifyDataSetChanged()
-    }
-
-    private fun injectDependencies() {
-        DaggerNewsListComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .newsListModule(NewsListModule(this)).build().inject(this)
     }
 
 

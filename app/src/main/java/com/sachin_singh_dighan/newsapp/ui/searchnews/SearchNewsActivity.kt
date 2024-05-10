@@ -1,6 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.searchnews
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,13 +15,14 @@ import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.databinding.ActivitySearchNewsBinding
 import com.sachin_singh_dighan.newsapp.di.component.searchnews.DaggerSearchNewsComponent
 import com.sachin_singh_dighan.newsapp.di.module.searchnews.SearchNewsModule
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.base.BaseActivity
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchNewsActivity : AppCompatActivity() {
+class SearchNewsActivity : BaseActivity<ActivitySearchNewsBinding>() {
 
     @Inject
     lateinit var searchNewsViewModel: SearchNewsViewModel
@@ -31,26 +33,18 @@ class SearchNewsActivity : AppCompatActivity() {
     @Inject
     lateinit var errorDialog: ErrorDialog
 
-    private lateinit var binding: ActivitySearchNewsBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
-        super.onCreate(savedInstanceState)
-        binding = ActivitySearchNewsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupUI()
-        fetchSearchResultData()
-        setupObserver()
-
-    }
-
-    private fun injectDependencies() {
+    override fun injectDependencies() {
         DaggerSearchNewsComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
             .searchNewsModule(SearchNewsModule(this)).build().inject(this)
 
     }
 
-    private fun setupUI() {
+    override fun setUpViewBinding(inflate: LayoutInflater): ActivitySearchNewsBinding {
+        return ActivitySearchNewsBinding.inflate(layoutInflater)
+    }
+
+    override fun setupUI(savedInstanceState: Bundle?) {
         binding.rvNewList.layoutManager = LinearLayoutManager(this)
         binding.rvNewList.addItemDecoration(
             DividerItemDecoration(
@@ -60,9 +54,11 @@ class SearchNewsActivity : AppCompatActivity() {
         )
         binding.rvNewList.adapter = adapter
         binding.progressBar.visibility = View.GONE
+
+        fetchSearchResultData()
     }
 
-    private fun setupObserver() {
+    override fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchNewsViewModel.uiState.collect {
@@ -86,7 +82,6 @@ class SearchNewsActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun fetchSearchResultData() {
         binding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

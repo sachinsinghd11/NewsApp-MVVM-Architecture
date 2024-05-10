@@ -3,6 +3,7 @@ package com.sachin_singh_dighan.newsapp.ui.newsources
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -16,24 +17,23 @@ import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.ActivityNewSourcesBinding
 import com.sachin_singh_dighan.newsapp.di.component.newsources.DaggerNewSourcesComponent
 import com.sachin_singh_dighan.newsapp.di.module.newsources.NewSourcesModule
-import com.sachin_singh_dighan.newsapp.ui.base.UiState
+import com.sachin_singh_dighan.newsapp.ui.base.BaseActivity
+import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsSourcesActivity : AppCompatActivity() {
+class NewsSourcesActivity : BaseActivity<ActivityNewSourcesBinding>() {
 
     @Inject
-    lateinit var newSourceListViewModel: NewSourcesViewModel
+    lateinit var newSourceListViewModel: NewsSourcesViewModel
 
     @Inject
-    lateinit var adapter: NewSourcesAdapter
+    lateinit var adapter: NewsSourcesAdapter
 
     @Inject
     lateinit var errorDialog: ErrorDialog
-
-    private lateinit var binding: ActivityNewSourcesBinding
 
     companion object {
         fun getInstance(context: Context): Intent {
@@ -41,16 +41,29 @@ class NewsSourcesActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
-        super.onCreate(savedInstanceState)
-        binding = ActivityNewSourcesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupUI()
-        setUpObserver()
+    override fun injectDependencies() {
+        DaggerNewSourcesComponent.builder()
+            .applicationComponent((application as NewsApplication).applicationComponent)
+            .newSourcesModule(NewSourcesModule(this)).build().inject(this)
     }
 
-    private fun setUpObserver() {
+    override fun setUpViewBinding(inflate: LayoutInflater): ActivityNewSourcesBinding {
+       return ActivityNewSourcesBinding.inflate(layoutInflater)
+    }
+
+    override fun setupUI(savedInstanceState: Bundle?) {
+        val recyclerView = binding.mainRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context,
+                (recyclerView.layoutManager as LinearLayoutManager).orientation
+            )
+        )
+        recyclerView.adapter = adapter
+    }
+
+    override fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 newSourceListViewModel.uiState.collect {
@@ -73,24 +86,6 @@ class NewsSourcesActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun setupUI() {
-        val recyclerView = binding.mainRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
-        recyclerView.adapter = adapter
-    }
-
-    private fun injectDependencies() {
-        DaggerNewSourcesComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .newSourcesModule(NewSourcesModule(this)).build().inject(this)
     }
 
     private fun renderList(sourceList: List<Sources>) {

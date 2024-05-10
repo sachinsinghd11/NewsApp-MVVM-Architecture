@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.NewSourceItemRowBinding
 
-class NewSourcesAdapter (
+class NewsSourcesAdapter (
     private val newResourceList: ArrayList<Sources>,
     private val newSourceActivity: NewsSourcesActivity,
-): RecyclerView.Adapter<NewSourcesAdapter.NewSourceViewHolder>() {
+): RecyclerView.Adapter<NewsSourcesAdapter.NewSourceViewHolder>() {
 
     class NewSourceViewHolder(
         private val binding: NewSourceItemRowBinding,

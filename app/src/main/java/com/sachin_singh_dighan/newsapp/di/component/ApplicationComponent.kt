@@ -8,6 +8,7 @@ import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRe
 import com.sachin_singh_dighan.newsapp.di.ApplicationContext
 import com.sachin_singh_dighan.newsapp.di.module.ApplicationModule
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,15 +18,17 @@ interface ApplicationComponent {
     fun inject(newsApplication: NewsApplication)
 
     @ApplicationContext
-    fun provideContext() : Context
+    fun provideContext(): Context
 
-    fun provideMainRepository() : MainRepository
+    fun provideMainRepository(): MainRepository
 
     fun getNetworkService(): NetworkService
 
     fun getTopHeadLineRepository(): TopHeadLineRepository
 
     fun getNetworkHelper(): NetworkHelper
+
+    fun getLogger(): Logger
 
 
 }

@@ -9,6 +9,8 @@ import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelperImpl
 import com.sachin_singh_dighan.newsapp.utils.RetryInterceptor
+import com.sachin_singh_dighan.newsapp.utils.logger.AppLogger
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -52,8 +54,14 @@ class ApplicationModule(private val application: NewsApplication) {
 
     @Provides
     @Singleton
-    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper{
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
         return NetworkHelperImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogger(): Logger {
+        return AppLogger()
     }
 
 }

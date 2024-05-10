@@ -10,6 +10,7 @@ import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionAct
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionAdapter
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -26,10 +27,11 @@ class LanguageSelectionModule(private val activity: LanguageSelectionActivity) {
     fun provideLanguageSelectionViewModel(
         languageSelectionRepository: LanguageSelectionRepository,
         networkHelper: NetworkHelper,
+        logger: Logger,
     ): LanguageSelectionViewModel {
         return ViewModelProvider(activity,
             ViewModelProviderFactory(LanguageSelectionViewModel::class) {
-                LanguageSelectionViewModel(languageSelectionRepository, networkHelper,)
+                LanguageSelectionViewModel(languageSelectionRepository, networkHelper, logger)
             })[LanguageSelectionViewModel::class.java]
     }
 

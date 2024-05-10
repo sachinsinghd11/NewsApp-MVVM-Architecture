@@ -10,6 +10,7 @@ import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionAdapt
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionViewModel
 import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -26,10 +27,11 @@ class CountrySelectionModule(private val activity: CountrySelectionActivity) {
     fun provideCountrySelectionViewModel(
         countrySelectionRepository: CountrySelectionRepository,
         networkHelper: NetworkHelper,
+        logger: Logger,
     ): CountrySelectionViewModel {
         return ViewModelProvider(activity,
             ViewModelProviderFactory(CountrySelectionViewModel::class) {
-                CountrySelectionViewModel(countrySelectionRepository, networkHelper)
+                CountrySelectionViewModel(countrySelectionRepository, networkHelper, logger)
             })[CountrySelectionViewModel::class.java]
     }
 

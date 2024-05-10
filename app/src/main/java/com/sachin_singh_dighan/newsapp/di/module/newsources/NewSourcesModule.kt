@@ -10,6 +10,7 @@ import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesAdapter
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -26,10 +27,11 @@ class NewSourcesModule(private val activity: NewsSourcesActivity) {
     fun providesNewSourceViewModel(
         newSourcesRepository: NewSourcesRepository,
         networkHelper: NetworkHelper,
+        logger: Logger,
     ): NewsSourcesViewModel {
         return ViewModelProvider(activity,
             ViewModelProviderFactory(NewsSourcesViewModel::class) {
-                NewsSourcesViewModel(newSourcesRepository, networkHelper)
+                NewsSourcesViewModel(newSourcesRepository, networkHelper, logger)
             }
         )[NewsSourcesViewModel::class.java]
     }

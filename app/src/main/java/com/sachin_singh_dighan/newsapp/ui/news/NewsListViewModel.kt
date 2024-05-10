@@ -7,7 +7,9 @@ import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.data.repository.news.NewsListRepository
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
+import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +23,12 @@ class NewsListViewModel(
     private val newsListRepository: NewsListRepository,
     private val topHeadLineRepository: TopHeadLineRepository,
     private val networkHelper: NetworkHelper,
+    private val logger: Logger,
 ) : ViewModel() {
+
+    companion object {
+        const val TAG = "NewsListViewModel"
+    }
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
 
@@ -33,8 +40,10 @@ class NewsListViewModel(
                 newsListRepository.getNewsListByResources(sourceId)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
+                        logger.d(TAG, e.toString())
                     }.collect {
                         _uiState.value = UiState.Success(it)
+                        logger.d(TAG, it.toString())
                     }
             } else {
                 _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)
@@ -49,8 +58,10 @@ class NewsListViewModel(
                 topHeadLineRepository.getTopHeadLinesByCountry(country)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
+                        logger.d(TAG, e.toString())
                     }.collect {
                         _uiState.value = UiState.Success(it)
+                        logger.d(TAG, it.toString())
                     }
             } else {
                 _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)
@@ -69,12 +80,13 @@ class NewsListViewModel(
                         selectedLanguagesList.addAll(language1)
                         selectedLanguagesList.addAll(language2)
                         selectedLanguagesList.shuffled(Random(seed))
-                    }.
-                    flowOn(Dispatchers.IO)
+                    }.flowOn(Dispatchers.IO)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
+                        logger.d(TAG, e.toString())
                     }.collect {
                         _uiState.value = UiState.Success(it)
+                        logger.d(TAG, it.toString())
                     }
             } else {
                 _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)

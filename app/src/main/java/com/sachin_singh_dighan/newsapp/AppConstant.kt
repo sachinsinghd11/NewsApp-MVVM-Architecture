@@ -24,6 +24,8 @@ object AppConstant {
     //Network error msg
     const val NETWORK_ERROR = "Please Check Network Connection"
 
+    const val NO_DATA_FOUND = "No Data Found"
+
     //Country name with code
 
     private const val UNITED_ARAB_EMIRATES = "United Arab Emirates"

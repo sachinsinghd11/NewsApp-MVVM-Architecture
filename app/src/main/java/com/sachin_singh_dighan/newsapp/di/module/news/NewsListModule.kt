@@ -11,6 +11,7 @@ import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListAdapter
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -28,6 +29,7 @@ class NewsListModule(private val activity: AppCompatActivity) {
         newsListRepository: NewsListRepository,
         topHeadLineRepository: TopHeadLineRepository,
         networkHelper: NetworkHelper,
+        logger: Logger,
     ): NewsListViewModel {
         return ViewModelProvider(activity,
             ViewModelProviderFactory(NewsListViewModel::class) {
@@ -35,6 +37,7 @@ class NewsListModule(private val activity: AppCompatActivity) {
                     newsListRepository,
                     topHeadLineRepository,
                     networkHelper,
+                    logger,
                 )
             }
         )[NewsListViewModel::class.java]

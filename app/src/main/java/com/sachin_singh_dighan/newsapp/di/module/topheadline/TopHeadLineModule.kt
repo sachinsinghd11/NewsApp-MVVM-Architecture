@@ -10,6 +10,7 @@ import com.sachin_singh_dighan.newsapp.ui.dialog.ErrorDialog
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineAdapter
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -23,10 +24,14 @@ class TopHeadLineModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun providesNewsListViewModel(topHeadLineRepository: TopHeadLineRepository, networkHelper: NetworkHelper): TopHeadLineViewModel {
+    fun providesNewsListViewModel(
+        topHeadLineRepository: TopHeadLineRepository,
+        networkHelper: NetworkHelper,
+        logger: Logger,
+    ): TopHeadLineViewModel {
         return ViewModelProvider(activity,
-            ViewModelProviderFactory(TopHeadLineViewModel::class){
-                TopHeadLineViewModel(topHeadLineRepository, networkHelper)
+            ViewModelProviderFactory(TopHeadLineViewModel::class) {
+                TopHeadLineViewModel(topHeadLineRepository, networkHelper, logger)
             }
         )[TopHeadLineViewModel::class.java]
     }

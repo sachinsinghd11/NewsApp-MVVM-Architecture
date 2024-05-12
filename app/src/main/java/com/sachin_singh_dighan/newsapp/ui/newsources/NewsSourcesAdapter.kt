@@ -5,23 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.databinding.NewSourceItemRowBinding
+import com.sachin_singh_dighan.newsapp.utils.ItemClickListener
 
-class NewsSourcesAdapter (
+class NewsSourcesAdapter(
     private val newResourceList: ArrayList<Sources>,
-    private val newSourceActivity: NewsSourcesActivity,
-): RecyclerView.Adapter<NewsSourcesAdapter.NewSourceViewHolder>() {
+) : RecyclerView.Adapter<NewsSourcesAdapter.NewSourceViewHolder>() {
+
+    lateinit var itemClickListener: ItemClickListener<Sources>
 
     class NewSourceViewHolder(
         private val binding: NewSourceItemRowBinding,
-        private val newSourceActivity: NewsSourcesActivity
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(sources: Sources) {
+        fun bind(sources: Sources, itemClickListener: ItemClickListener<Sources>) {
             binding.newSourceElement.text = sources.name
-            itemView.setOnClickListener { onMenuItemClick(sources) }
-        }
-
-        private fun onMenuItemClick(source: Sources) {
-            newSourceActivity.onNewSourceItemClick(source)
+            itemView.setOnClickListener { itemClickListener(bindingAdapterPosition, sources) }
         }
     }
 
@@ -32,14 +29,14 @@ class NewsSourcesAdapter (
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), newSourceActivity
+            ),
         )
     }
 
     override fun getItemCount(): Int = newResourceList.size
 
     override fun onBindViewHolder(holder: NewSourceViewHolder, position: Int) {
-        holder.bind(newResourceList[position])
+        holder.bind(newResourceList[position], itemClickListener)
     }
 
     fun addData(list: List<Sources>) {

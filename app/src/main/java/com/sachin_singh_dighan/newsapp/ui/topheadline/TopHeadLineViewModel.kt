@@ -1,33 +1,29 @@
 package com.sachin_singh_dighan.newsapp.ui.topheadline
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
+import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TopHeadLineViewModel(
+@HiltViewModel
+class TopHeadLineViewModel @Inject constructor(
     private val topHeadLineRepository: TopHeadLineRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : ViewModel() {
+) : BaseViewModel<List<*>>(networkHelper) {
 
     companion object {
         const val TAG = "TopHeadLineViewModel"
     }
-
-    private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
-
-    val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
     init {
         fetchTopHeadlines()
@@ -39,11 +35,11 @@ class TopHeadLineViewModel(
                 topHeadLineRepository.getTopHeadLinesByDefault()
                     .flowOn(Dispatchers.IO)
                     .catch { e ->
-                        _uiState.value = UiState.Error(e.toString())
                         logger.d(TAG, e.toString())
+                        _uiState.value = UiState.Error(e.toString())
                     }.collect {
-                        _uiState.value = UiState.Success(it)
                         logger.d(TAG, it.toString())
+                        _uiState.value = UiState.Success(it)
                     }
             } else {
                 _uiState.value = UiState.Error(AppConstant.NETWORK_ERROR)

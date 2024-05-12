@@ -6,14 +6,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.Window
-import com.sachin_singh_dighan.newsapp.databinding.ActivityMainBinding
-import com.sachin_singh_dighan.newsapp.databinding.ActivityTopHeadLineBinding
 import com.sachin_singh_dighan.newsapp.databinding.ErrorMessagePopupBinding
 
 class ErrorDialog {
 
-    private lateinit var binding:ErrorMessagePopupBinding
-    fun showResetPasswordDialog(activity: Activity?, errorMessage: String,) {
+    private lateinit var binding: ErrorMessagePopupBinding
+    fun showResetPasswordDialog(activity: Activity?, errorMessage: String) {
         val dialog = Dialog(activity!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)

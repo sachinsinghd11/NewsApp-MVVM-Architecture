@@ -1,9 +1,7 @@
 package com.sachin_singh_dighan.newsapp.di.module
 
 import android.content.Context
-import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
-import com.sachin_singh_dighan.newsapp.di.ApplicationContext
 import com.sachin_singh_dighan.newsapp.di.BaseUrl
 import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
@@ -13,6 +11,9 @@ import com.sachin_singh_dighan.newsapp.utils.logger.AppLogger
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,13 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: NewsApplication) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context {
-        return application
-    }
+@InstallIn(SingletonComponent::class)
+class ApplicationModule {
 
     @BaseUrl
     @Provides

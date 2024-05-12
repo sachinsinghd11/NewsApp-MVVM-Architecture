@@ -6,12 +6,4 @@ import javax.inject.Scope
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
-annotation class ApplicationContext
-
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
-annotation class ActivityContext
-
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
 annotation class BaseUrl

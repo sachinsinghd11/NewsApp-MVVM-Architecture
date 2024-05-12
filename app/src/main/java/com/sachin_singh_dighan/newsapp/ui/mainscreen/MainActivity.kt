@@ -1,50 +1,46 @@
 package com.sachin_singh_dighan.newsapp.ui.mainscreen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.NewsApplication
 import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.ActivityMainBinding
-import com.sachin_singh_dighan.newsapp.di.component.mainscreen.DaggerMainActivityComponent
-import com.sachin_singh_dighan.newsapp.di.module.mainscreen.MainActivityModule
+import com.sachin_singh_dighan.newsapp.ui.base.BaseActivity
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionActivity
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourcesActivity
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsActivity
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var mainViewModel: MainViewModel
+@AndroidEntryPoint
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     @Inject
     lateinit var adapter: MainActivityAdapter
 
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setUi()
-        setupObserver()
+    override fun setUpViewBinding(inflate: LayoutInflater): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private fun setUi() {
+    override fun setUpViewModel() {
+        viewModel = ViewModelProvider(this@MainActivity)[MainViewModel::class.java]
+    }
+
+    override fun setupUI(savedInstanceState: Bundle?) {
         val recyclerView = binding.mainRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
@@ -54,16 +50,53 @@ class MainActivity : AppCompatActivity() {
             )
         )
         recyclerView.adapter = adapter
+
+        adapter.itemClickListener = { _, sectionClicked ->
+            when (sectionClicked.sectionName) {
+                AppConstant.TOP_HEADLINES -> {
+                    startActivity(
+                        TopHeadLineActivity.getInstance(
+                            this@MainActivity,
+                            AppConstant.NEWS_BY_DEFAULT
+                        )
+                    )
+                }
+
+                AppConstant.NEWS_SOURCES -> {
+                    val intent = Intent(this@MainActivity, NewsSourcesActivity::class.java)
+                    startActivity(intent)
+                }
+
+                AppConstant.COUNTRIES -> {
+                    val intent = Intent(this@MainActivity, CountrySelectionActivity::class.java)
+                    startActivity(intent)
+                }
+
+                AppConstant.LANGUAGES -> {
+                    val intent = Intent(this@MainActivity, LanguageSelectionActivity::class.java)
+                    startActivity(intent)
+                }
+
+                AppConstant.SEARCH -> {
+                    val intent = Intent(this@MainActivity, SearchNewsActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
-    private fun setupObserver() {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.uiState.collect() {
+                viewModel.uiState.collect() {
                     when (it) {
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            renderList(it.data)
+                            it.data?.let { newsList ->
+                                renderList(newsList as List<MainSection>)
+                            }
                             binding.mainRecyclerView.visibility = View.VISIBLE
                         }
 
@@ -74,8 +107,7 @@ class MainActivity : AppCompatActivity() {
 
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -83,48 +115,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun renderList(mainSection: List<MainSection>) {
         adapter.addData(mainSection)
         adapter.notifyDataSetChanged()
-    }
-
-    private fun injectDependencies() {
-        DaggerMainActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .mainActivityModule(MainActivityModule(this)).build().inject(this)
-    }
-
-    fun onMainSectionItemClick(sectionClicked: String) {
-        when (sectionClicked) {
-            AppConstant.TOP_HEADLINES -> {
-                startActivity(
-                    TopHeadLineActivity.getInstance(
-                        this@MainActivity,
-                        AppConstant.NEWS_BY_DEFAULT
-                    )
-                )
-            }
-
-            AppConstant.NEWS_SOURCES -> {
-                val intent = Intent(this@MainActivity, NewsSourcesActivity::class.java)
-                startActivity(intent)
-            }
-
-            AppConstant.COUNTRIES -> {
-                val intent = Intent(this@MainActivity, CountrySelectionActivity::class.java)
-                startActivity(intent)
-            }
-
-            AppConstant.LANGUAGES -> {
-                val intent = Intent(this@MainActivity, LanguageSelectionActivity::class.java)
-                startActivity(intent)
-            }
-
-            AppConstant.SEARCH -> {
-                val intent = Intent(this@MainActivity, SearchNewsActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
     }
 }

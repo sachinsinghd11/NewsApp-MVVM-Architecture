@@ -1,38 +1,34 @@
 package com.sachin_singh_dighan.newsapp.ui.news
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.data.repository.news.NewsListRepository
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
+import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
-import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadLineViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.random.Random
 
-class NewsListViewModel(
+@HiltViewModel
+class NewsListViewModel @Inject constructor(
     private val newsListRepository: NewsListRepository,
     private val topHeadLineRepository: TopHeadLineRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : ViewModel() {
+) : BaseViewModel<List<*>>(networkHelper) {
 
     companion object {
         const val TAG = "NewsListViewModel"
     }
-
-    private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
-
-    val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
     fun fetchNewsByResource(sourceId: String) {
         viewModelScope.launch {

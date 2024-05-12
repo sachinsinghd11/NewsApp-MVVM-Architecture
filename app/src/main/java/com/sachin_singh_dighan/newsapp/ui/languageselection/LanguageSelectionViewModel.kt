@@ -1,33 +1,30 @@
 package com.sachin_singh_dighan.newsapp.ui.languageselection
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import com.sachin_singh_dighan.newsapp.data.repository.languageselection.LanguageSelectionRepository
+import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
-import com.sachin_singh_dighan.newsapp.ui.news.NewsListViewModel
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LanguageSelectionViewModel(
+@HiltViewModel
+class LanguageSelectionViewModel @Inject constructor(
     private val languageSelectionRepository: LanguageSelectionRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : ViewModel() {
+) : BaseViewModel<List<*>>(networkHelper) {
 
     companion object {
         const val TAG = "LanguageSelectionViewModel"
     }
-    
-    private val _uiState = MutableStateFlow<UiState<List<LanguageData>>>(UiState.Loading)
-    val uiState: StateFlow<UiState<List<LanguageData>>> = _uiState
+
     val languageCodeSet = mutableSetOf<String>()
 
     init {

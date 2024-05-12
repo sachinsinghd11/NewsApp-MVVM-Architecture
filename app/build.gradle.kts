@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -54,8 +55,8 @@ dependencies {
     implementation("android.arch.lifecycle:extensions:1.1.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("com.google.dagger:dagger:2.5")
-    kapt("com.google.dagger:dagger-compiler:2.5")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
     implementation("org.glassfish:javax.annotation:10.0-b28")
     implementation("androidx.browser:browser:1.6.0")
 

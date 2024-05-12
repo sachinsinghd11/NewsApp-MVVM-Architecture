@@ -5,36 +5,38 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.databinding.MainActivityItemRowBinding
+import com.sachin_singh_dighan.newsapp.utils.ItemClickListener
 
 class MainActivityAdapter(
     private val mainSectionList: ArrayList<MainSection>,
-    private val activity: MainActivity,
-): RecyclerView.Adapter<MainActivityAdapter.MainSectionViewHolder>(){
+) : RecyclerView.Adapter<MainActivityAdapter.MainSectionViewHolder>() {
 
-    var onItemClickCallback: ((MainSection) -> Unit)? = null
+    lateinit var itemClickListener: ItemClickListener<MainSection>
 
     class MainSectionViewHolder(
         private val binding: MainActivityItemRowBinding,
-        private val activity: MainActivity
-    ): RecyclerView.ViewHolder(binding.root){
-        fun bind(mainSection: MainSection){
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(mainSection: MainSection, itemClickListener: ItemClickListener<MainSection>) {
             binding.mainSectionElement.text = mainSection.sectionName
-            itemView.setOnClickListener { onMenuItemClick(mainSection.sectionName) }
-        }
-        private fun onMenuItemClick(mainSection: String ){
-            activity.onMainSectionItemClick(mainSection)
+            itemView.setOnClickListener { itemClickListener(bindingAdapterPosition, mainSection) }
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainSectionViewHolder {
-        return MainSectionViewHolder(MainActivityItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false),activity)
+        return MainSectionViewHolder(
+            MainActivityItemRowBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+        )
     }
 
     override fun getItemCount(): Int = mainSectionList.size
 
     override fun onBindViewHolder(holder: MainSectionViewHolder, position: Int) {
-        holder.bind(mainSectionList[position])
+        holder.bind(mainSectionList[position], itemClickListener)
     }
 
     fun addData(list: List<MainSection>) {

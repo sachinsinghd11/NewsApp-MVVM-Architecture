@@ -1,21 +1,22 @@
 package com.sachin_singh_dighan.newsapp.ui.news
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
 import com.sachin_singh_dighan.newsapp.databinding.TopHeadlineItemLayoutBinding
+import com.sachin_singh_dighan.newsapp.utils.ItemClickListener
 
 class NewsListAdapter(
-    private val articleList: ArrayList<Article>
+    private val articleList: ArrayList<Any>
 ) : RecyclerView.Adapter<NewsListAdapter.DataViewHolder>() {
+
+    lateinit var itemClickListener: ItemClickListener<Any>
 
     class DataViewHolder(private val binding: TopHeadlineItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(article: Article) {
+        fun bind(article: Article, itemClickListener: ItemClickListener<Any>) {
             binding.textViewTitle.text = article.title
             binding.textViewDescription.text = article.description
             binding.textViewSource.text = article.source.name
@@ -23,9 +24,7 @@ class NewsListAdapter(
                 .load(article.imageUrl)
                 .into(binding.imageViewBanner)
             itemView.setOnClickListener {
-                val builder = CustomTabsIntent.Builder()
-                val customTabsIntent = builder.build()
-                customTabsIntent.launchUrl(it.context, Uri.parse(article.url))
+                itemView.setOnClickListener { itemClickListener(bindingAdapterPosition, article) }
             }
         }
     }
@@ -41,9 +40,13 @@ class NewsListAdapter(
     override fun getItemCount(): Int = articleList.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) =
-        holder.bind(articleList[position])
+        holder.bind(articleList[position] as Article, itemClickListener)
 
-    fun addData(list: List<Article>) {
+    fun addData(list: List<Any>) {
+        articleList.addAll(list)
+    }
+
+    fun replaceData(list: List<Article>) {
         articleList.clear()
         articleList.addAll(list)
     }

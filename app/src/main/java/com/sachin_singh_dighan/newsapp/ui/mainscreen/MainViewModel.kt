@@ -1,6 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.mainscreen
 
 import androidx.lifecycle.viewModelScope
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.data.repository.mainscreen.MainRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -17,7 +18,7 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : BaseViewModel<List<*>>(networkHelper) {
+) : BaseViewModel<List<MainSection>>(networkHelper) {
 
     init {
         getMainSections()

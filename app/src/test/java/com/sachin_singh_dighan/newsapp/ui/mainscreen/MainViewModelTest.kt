@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp.mainscreen
+package com.sachin_singh_dighan.newsapp.ui.mainscreen
 
 import app.cash.turbine.test
 import com.sachin_singh_dighan.newsapp.AppConstant

@@ -12,13 +12,7 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(){
     fun getDataForMainSection(): Flow<List<MainSection>>{
         return flow {
-            val mainSectionList = mutableListOf<MainSection>()
-            mainSectionList.add(MainSection(AppConstant.TOP_HEADLINES))
-            mainSectionList.add(MainSection(AppConstant.NEWS_SOURCES))
-            mainSectionList.add(MainSection(AppConstant.COUNTRIES))
-            mainSectionList.add(MainSection(AppConstant.LANGUAGES))
-            mainSectionList.add(MainSection(AppConstant.SEARCH))
-            emit(mainSectionList)
+            emit(AppConstant.MAIN_SECTION_LIST)
         }
     }
 }

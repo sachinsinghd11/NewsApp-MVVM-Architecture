@@ -2,6 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.countryselection
 
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.data.repository.countryselection.CountrySelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -19,7 +20,7 @@ class CountrySelectionViewModel @Inject constructor(
     private val countrySelectionRepository: CountrySelectionRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : BaseViewModel<List<*>>(networkHelper) {
+) : BaseViewModel<List<CountrySelection>>(networkHelper) {
 
     companion object {
         const val TAG = "CountrySelectionViewModel"

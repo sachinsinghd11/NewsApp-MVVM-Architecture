@@ -23,6 +23,14 @@ class TopHeadLineRepository @Inject constructor(
         }
     }
 
+    fun getTopHeadLinesByCategory(category: String): Flow<List<Article>> {
+        return flow {
+            emit(networkService.getTopHeadLinesByCategory(category))
+        }.map {
+            it.articles
+        }
+    }
+
     fun getTopHeadLinesByCountry(country: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getTopHeadLinesByCountry(country))

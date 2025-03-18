@@ -3,7 +3,6 @@ package com.sachin_singh_dighan.newsapp.ui.news
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
-import com.sachin_singh_dighan.newsapp.data.repository.news.NewsListRepository
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -20,20 +19,19 @@ import kotlin.random.Random
 
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val newsListRepository: NewsListRepository,
     private val topHeadLineRepository: TopHeadLineRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : BaseViewModel<List<*>>(networkHelper) {
+) : BaseViewModel<List<Article>>(networkHelper) {
 
     companion object {
         const val TAG = "NewsListViewModel"
     }
 
-    fun fetchNewsByResource(sourceId: String) {
+    fun fetchNewsByCategory(sourceId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkAvailable()) {
-                newsListRepository.getNewsListByResources(sourceId)
+                topHeadLineRepository.getTopHeadLinesByCategory(sourceId)
                     .catch { e ->
                         _uiState.value = UiState.Error(e.toString())
                         logger.d(TAG, e.toString())
@@ -66,7 +64,8 @@ class NewsListViewModel @Inject constructor(
         }
     }
 
-    fun fetchNewsByLanguage(language: ArrayList<String>) {
+    fun fetchNewsByLanguage(language: List<String>) {
+        logger.d("TAG", "fetchNewsByLanguage: $language")
         viewModelScope.launch {
             if (networkHelper.isNetworkAvailable()) {
                 val selectedLanguagesList = mutableListOf<Article>()

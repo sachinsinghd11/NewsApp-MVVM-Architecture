@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface NetworkService {
 
     @GET("top-headlines")
-    suspend fun getNewsByResources(@Query("sources") source: String): TopHeadLinesResponse
+    suspend fun getTopHeadLinesByCategory(@Query("category") category: String): TopHeadLinesResponse
 
     @GET("top-headlines")
     suspend fun getTopHeadLinesByCountry(@Query("country") country: String): TopHeadLinesResponse

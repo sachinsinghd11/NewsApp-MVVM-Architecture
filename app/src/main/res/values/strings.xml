@@ -5,4 +5,6 @@
     <string name="search_hint">Search</string>
     <string name="search_message">Enter text to search</string>
     <string name="language_selection_subtitle">Select any two languages</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+    <string name="loading">Loading</string>
 </resources>

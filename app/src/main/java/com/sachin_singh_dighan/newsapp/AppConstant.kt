@@ -8,23 +8,40 @@ object AppConstant {
     //for main screen
     const val TOP_HEADLINES = "Top Headlines"
     const val NEWS_SOURCES = "News Sources"
+    const val CHANNELS = "Channels"
     const val COUNTRIES = "Countries"
     const val LANGUAGES = "Languages"
     const val SEARCH = "Search"
+    const val NEWS_LIST = "news_list"
 
     //for network service
     const val API_KEY = "5e59e08053df4d13a5d4ff6fb1b228d0"
 
     //keys for distinguishing between news type
-    const val NEWS_BY_DEFAULT = "in"
-    const val NEWS_BY_SOURCE = "News by source"
-    const val NEWS_BY_COUNTRY = "News by country"
-    const val NEWS_BY_LANGUAGE = "News by language"
+    const val NEWS_BY_DEFAULT = "us"
+    const val NEWS_BY_CATEGORY_VALUE = "category"
+    const val NEWS_BY_CHANNEL_VALUE = "channel"
+    const val NEWS_BY_COUNTRY_VALUE = "country"
+    const val NEWS_BY_LANGUAGE_VALUE = "language"
+
+    const val NEWS_TYPE_CODE = "news_type_code"
 
     //Network error msg
     const val NETWORK_ERROR = "Please Check Network Connection"
 
     const val NO_DATA_FOUND = "No Data Found"
+
+    //argument for newsList
+    const val ARGUMENT_VALUE = "argument_value"
+
+    //argument for countrycode
+    const val NEW_BY_COUNTRY_CODE = "news_by_country_code"
+
+    //argument for newssourcecode
+    const val NEW_BY_NEWS_SOURCE_CODE = "news_by_news_source_code"
+
+    //argument for launguage
+    const val NEW_BY_LANGUAGE_CODE = "news_by_language_code"
 
     //Country name with code
 

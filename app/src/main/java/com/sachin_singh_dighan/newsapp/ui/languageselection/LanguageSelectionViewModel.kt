@@ -1,5 +1,6 @@
 package com.sachin_singh_dighan.newsapp.ui.languageselection
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
@@ -26,7 +27,8 @@ class LanguageSelectionViewModel @Inject constructor(
         const val TAG = "LanguageSelectionViewModel"
     }
 
-    val languageCodeSet = mutableSetOf<String>()
+    private val _selectedItems = mutableStateListOf<String>()
+    val selectedItems: List<String> = _selectedItems
 
     init {
         getLanguageData()
@@ -49,6 +51,30 @@ class LanguageSelectionViewModel @Inject constructor(
             }
 
         }
+    }
+
+    // Returns true if this selection triggered navigation (second item selected)
+    fun toggleSelection(item: String): Boolean {
+        if (_selectedItems.contains(item)) {
+            _selectedItems.remove(item)
+            return false
+        } else {
+            if (_selectedItems.size <= 1) {
+                _selectedItems.add(item)
+                return _selectedItems.size == 2 // Return true if this was the second selection
+            } else {
+                return false // Return false if this was the 3rd selection
+            }
+
+        }
+    }
+
+    fun clearSelection() {
+        _selectedItems.clear()
+    }
+
+    fun isItemSelected(item: String): Boolean {
+        return _selectedItems.contains(item)
     }
 
 }

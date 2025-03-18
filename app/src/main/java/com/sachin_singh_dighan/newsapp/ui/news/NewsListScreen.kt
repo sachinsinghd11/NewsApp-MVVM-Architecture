@@ -26,7 +26,8 @@ import com.sachin_singh_dighan.newsapp.ui.component.TitleText
 
 @Composable
 fun NewsListRoute(
-    fetchNewByType: String,
+    fetchNewByType: String = "",
+    selectedLanguages: List<String> = emptyList(),
     newType: String,
     onNewsClick: (url: String) -> Unit,
     viewModel: NewsListViewModel = hiltViewModel()
@@ -37,7 +38,7 @@ fun NewsListRoute(
     } else if (newType == AppConstant.NEWS_BY_COUNTRY_VALUE) {
         viewModel.fetchNewsByCountry(fetchNewByType)
     } else if (newType == AppConstant.NEWS_BY_LANGUAGE_VALUE) {
-        viewModel.fetchNewsByCountry(fetchNewByType)
+        viewModel.fetchNewsByLanguage(selectedLanguages)
     }
 
 

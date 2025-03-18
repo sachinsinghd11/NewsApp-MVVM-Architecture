@@ -65,6 +65,7 @@ class NewsListViewModel @Inject constructor(
     }
 
     fun fetchNewsByLanguage(language: List<String>) {
+        logger.d("TAG", "fetchNewsByLanguage: $language")
         viewModelScope.launch {
             if (networkHelper.isNetworkAvailable()) {
                 val selectedLanguagesList = mutableListOf<Article>()

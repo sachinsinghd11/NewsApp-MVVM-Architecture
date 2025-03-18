@@ -20,6 +20,11 @@ import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourceRoute
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsScreenRoute
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadlinesRoute
 
+object NavigationHelper {
+    fun List<String>.toNavigationString() = joinToString(",")
+    fun String.fromNavigationString() = split(",")
+}
+
 sealed class Route(val name: String) {
     data object MainScreen : Route("MainScreen")
     data object TopHeadlines : Route("TopHeadlines")
@@ -27,8 +32,9 @@ sealed class Route(val name: String) {
     data object CountrySelection : Route("CountrySelection")
     data object LanguageSelection : Route("LanguageSelection")
     data object SearchNews : Route("SearchNews")
-    data object NewsList : Route("NewsList/{value}/{type}") {
-        fun createRoute(value: String, type: String) = "NewsList/$value/$type"
+    data object NewsList : Route("NewsList/{value}/{valueList}/{type}") {
+        fun createRoute(value: String = "", valueList: String = "", type: String) =
+            "NewsList/$value/${valueList}/$type"
     }
 }
 
@@ -80,8 +86,8 @@ fun NewsNavHost() {
                 onClick = { source ->
                     navController.navigate(
                         Route.NewsList.createRoute(
-                            source,
-                            AppConstant.NEWS_BY_CATEGORY_VALUE
+                            value = source,
+                            type = AppConstant.NEWS_BY_CATEGORY_VALUE
                         )
                     )
 
@@ -93,8 +99,8 @@ fun NewsNavHost() {
                 onClick = { country ->
                     navController.navigate(
                         Route.NewsList.createRoute(
-                            country,
-                            AppConstant.NEWS_BY_COUNTRY_VALUE
+                            value = country,
+                            type = AppConstant.NEWS_BY_COUNTRY_VALUE
                         )
                     )
                 }
@@ -103,10 +109,11 @@ fun NewsNavHost() {
         composable(route = Route.LanguageSelection.name) {
             LanguageSelectionRoute(
                 onClick = { language ->
+                    val itemsString = language.joinToString(",")
                     navController.navigate(
                         Route.NewsList.createRoute(
-                            language,
-                            AppConstant.NEWS_BY_LANGUAGE_VALUE
+                            valueList = itemsString,
+                            type = AppConstant.NEWS_BY_LANGUAGE_VALUE
                         )
                     )
                 }
@@ -124,12 +131,16 @@ fun NewsNavHost() {
             route = Route.NewsList.name,
             arguments = listOf(
                 navArgument("value") { type = NavType.StringType },
+                navArgument("valueList") { type = NavType.StringType },
                 navArgument("type") { type = NavType.StringType }
             )) {
             val fetchNewByType = it.arguments?.getString("value") ?: ""
+            val valueListString = it.arguments?.getString("valueList") ?: ""
+            val selectedLanguages = valueListString.split(",")
             val newType = it.arguments?.getString("type") ?: ""
             NewsListRoute(
                 fetchNewByType,
+                selectedLanguages,
                 newType,
                 onNewsClick = { url ->
                     opeCustomChromeTab(context, url)

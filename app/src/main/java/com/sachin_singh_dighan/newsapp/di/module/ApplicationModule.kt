@@ -4,6 +4,8 @@ import android.content.Context
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.di.BaseUrl
 import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
+import com.sachin_singh_dighan.newsapp.utils.DefaultDispatcherProvider
+import com.sachin_singh_dighan.newsapp.utils.DispatcherProvider
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelperImpl
 import com.sachin_singh_dighan.newsapp.utils.RetryInterceptor
@@ -59,5 +61,9 @@ class ApplicationModule {
     fun provideLogger(): Logger {
         return AppLogger()
     }
+
+    @Provides
+    @Singleton
+    fun provideDispatcherProvider(): DispatcherProvider = DefaultDispatcherProvider()
 
 }

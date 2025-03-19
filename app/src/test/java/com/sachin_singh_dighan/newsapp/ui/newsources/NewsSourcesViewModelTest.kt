@@ -3,7 +3,7 @@ package com.sachin_singh_dighan.newsapp.ui.newsources
 import app.cash.turbine.test
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
-import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewSourcesRepository
+import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewsSourcesRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.TestDispatcherProvider
@@ -35,7 +35,7 @@ import kotlin.time.ExperimentalTime
 class NewsSourcesViewModelTest {
 
     @Mock
-    private lateinit var newSourcesRepository: NewSourcesRepository
+    private lateinit var newsSourcesRepository: NewsSourcesRepository
 
     @Mock
     private lateinit var networkHelper: NetworkHelper
@@ -85,11 +85,11 @@ class NewsSourcesViewModelTest {
 
         //Given
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(newSourcesRepository.getNewResources()).thenReturn(flowOf(mockSources))
+        `when`(newsSourcesRepository.getNewResources()).thenReturn(flowOf(mockSources))
 
         // Act
         viewModel =
-            NewsSourcesViewModel(newSourcesRepository, networkHelper, logger, dispatcherProvider)
+            NewsSourcesViewModel(newsSourcesRepository, networkHelper, logger, dispatcherProvider)
 
         // Assert
         viewModel.uiState.test {
@@ -100,7 +100,7 @@ class NewsSourcesViewModelTest {
         }
 
         verify(networkHelper).isNetworkAvailable()
-        verify(newSourcesRepository, times(1)).getNewResources()
+        verify(newsSourcesRepository, times(1)).getNewResources()
     }
 
     @Test
@@ -110,7 +110,7 @@ class NewsSourcesViewModelTest {
 
         // Act
         viewModel =
-            NewsSourcesViewModel(newSourcesRepository, networkHelper, logger, dispatcherProvider)
+            NewsSourcesViewModel(newsSourcesRepository, networkHelper, logger, dispatcherProvider)
 
         // Assert
         viewModel.uiState.test {
@@ -135,13 +135,13 @@ class NewsSourcesViewModelTest {
         val exception = IOException(errorMessage)
 
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(newSourcesRepository.getNewResources()).thenReturn(flow {
+        `when`(newsSourcesRepository.getNewResources()).thenReturn(flow {
             throw exception
         })
 
         // Act
         viewModel =
-            NewsSourcesViewModel(newSourcesRepository, networkHelper, logger, dispatcherProvider)
+            NewsSourcesViewModel(newsSourcesRepository, networkHelper, logger, dispatcherProvider)
 
         // Assert
         viewModel.uiState.test {
@@ -157,7 +157,7 @@ class NewsSourcesViewModelTest {
         }
 
         verify(networkHelper).isNetworkAvailable()
-        verify(newSourcesRepository, times(1)).getNewResources()
+        verify(newsSourcesRepository, times(1)).getNewResources()
         verify(logger).d(NewsSourcesViewModel.TAG, exception.toString())
     }
 
@@ -166,7 +166,7 @@ class NewsSourcesViewModelTest {
         // Given - First setup for error
         `when`(networkHelper.isNetworkAvailable()).thenReturn(false)
         viewModel =
-            NewsSourcesViewModel(newSourcesRepository, networkHelper, logger, dispatcherProvider)
+            NewsSourcesViewModel(newsSourcesRepository, networkHelper, logger, dispatcherProvider)
 
         // Verify initial error state
         viewModel.uiState.test {
@@ -177,7 +177,7 @@ class NewsSourcesViewModelTest {
 
         // Now prepare for success on retry
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(newSourcesRepository.getNewResources()).thenReturn(flowOf(mockSources))
+        `when`(newsSourcesRepository.getNewResources()).thenReturn(flowOf(mockSources))
 
         // Act
         viewModel.retryOperation()
@@ -200,14 +200,14 @@ class NewsSourcesViewModelTest {
     fun initial_state_ShouldBeLoading() = runTest {
         // Given - force delay in repository response
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(newSourcesRepository.getNewResources()).thenReturn(flow {
+        `when`(newsSourcesRepository.getNewResources()).thenReturn(flow {
             delay(100) // Small delay
             emit(mockSources)
         })
 
         // Create the ViewModel but observe the state before init completes
         viewModel =
-            NewsSourcesViewModel(newSourcesRepository, networkHelper, logger, dispatcherProvider)
+            NewsSourcesViewModel(newsSourcesRepository, networkHelper, logger, dispatcherProvider)
 
         // Assert
         viewModel.uiState.test {

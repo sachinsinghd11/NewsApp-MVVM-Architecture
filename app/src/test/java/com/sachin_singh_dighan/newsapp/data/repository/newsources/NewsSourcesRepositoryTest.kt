@@ -20,19 +20,19 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class NewSourcesRepositoryTest {
+class NewsSourcesRepositoryTest {
 
     @Mock
     private lateinit var networkService: NetworkService
 
-    private lateinit var newSourcesRepository: NewSourcesRepository
+    private lateinit var newsSourcesRepository: NewsSourcesRepository
 
     private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
     fun setUp() {
         dispatcherProvider = TestDispatcherProvider()
-        newSourcesRepository = NewSourcesRepository(networkService)
+        newsSourcesRepository = NewsSourcesRepository(networkService)
     }
 
     @Test
@@ -76,7 +76,7 @@ class NewSourcesRepositoryTest {
         `when`(networkService.getNewResources()).thenReturn(mockResponse)
 
         // Act & Assert
-        newSourcesRepository.getNewResources().test {
+        newsSourcesRepository.getNewResources().test {
             val result = awaitItem()
 
             // Expecting 2 sources because we should get distinct by category (general and sports)
@@ -105,7 +105,7 @@ class NewSourcesRepositoryTest {
         `when`(networkService.getNewResources()).thenReturn(mockResponse)
 
         // Act & Assert
-        newSourcesRepository.getNewResources().test {
+        newsSourcesRepository.getNewResources().test {
             val result = awaitItem()
             assertEquals(0, result.size)
             awaitComplete()
@@ -119,7 +119,7 @@ class NewSourcesRepositoryTest {
         `when`(networkService.getNewResources()).thenThrow(exception)
 
         // Act & Assert
-        newSourcesRepository.getNewResources().test {
+        newsSourcesRepository.getNewResources().test {
             val error = awaitError()
             assertEquals("API Error", error.message)
             assertEquals(RuntimeException::class.java, error.javaClass)
@@ -176,7 +176,7 @@ class NewSourcesRepositoryTest {
         `when`(networkService.getNewResources()).thenReturn(mockResponse)
 
         // Act & Assert
-        newSourcesRepository.getNewResources().test {
+        newsSourcesRepository.getNewResources().test {
             val result = awaitItem()
 
             // Should return all 4 sources as they all have different categories

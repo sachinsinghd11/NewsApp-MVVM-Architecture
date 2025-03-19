@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
-class NewSourcesRepository @Inject constructor(private val networkService: NetworkService) {
+class NewsSourcesRepository @Inject constructor(private val networkService: NetworkService) {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getNewResources(): Flow<List<Sources>> {
         return flow {

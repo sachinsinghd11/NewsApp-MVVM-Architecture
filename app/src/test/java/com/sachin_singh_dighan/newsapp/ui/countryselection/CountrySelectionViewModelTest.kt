@@ -56,7 +56,7 @@ class CountrySelectionViewModelTest {
     }
 
     @Test
-    fun `init should fetch country data when network is available`() = runTest {
+    fun init_shouldFetchCountryData_WHEN_networkIsAvailable() = runTest {
         // Arrange
         val mockCountrySelections = listOf(
             CountrySelection(
@@ -102,7 +102,7 @@ class CountrySelectionViewModelTest {
     }
 
     @Test
-    fun `init should show error when network is unavailable`() = runTest {
+    fun init_shouldShowError_WHEN_networkIsUnavailable() = runTest {
         // Arrange
         `when`(networkHelper.isNetworkAvailable()).thenReturn(false)
 
@@ -126,7 +126,7 @@ class CountrySelectionViewModelTest {
     }
 
     @Test
-    fun `init should show error when repository throws exception`() = runTest {
+    fun init_shouldShowError_WHEN_repositoryThrowsException() = runTest {
         // Arrange
         val exception = IOException("Repository error")
 
@@ -157,7 +157,7 @@ class CountrySelectionViewModelTest {
     }
 
     @Test
-    fun `getCountrySelection should handle empty list from repository`() = runTest {
+    fun getCountrySelection_shouldHandleEmptyListFromRepository() = runTest {
         // Arrange
         val emptyList = emptyList<CountrySelection>()
 

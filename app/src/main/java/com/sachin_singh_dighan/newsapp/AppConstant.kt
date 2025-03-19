@@ -28,7 +28,7 @@ object AppConstant {
     const val NEWS_TYPE_CODE = "news_type_code"
 
     //Network error msg
-    const val NETWORK_ERROR = "Please Check Network Connection"
+    const val NETWORK_ERROR = "Network error. Please check your connection."
 
     const val NO_DATA_FOUND = "No Data Found"
 

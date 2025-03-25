@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp.ui.composeScreen.ui.theme
+package com.sachin_singh_dighan.newsapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

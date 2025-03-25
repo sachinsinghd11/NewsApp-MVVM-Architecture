@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Source
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiSource
 
 @Composable
 fun SourceText(
-    source: Source
+    apiSource: ApiSource
 ){
     Text(
-        text = source.name,
+        text = apiSource.name,
         style = MaterialTheme.typography.titleSmall,
         color = Color.Gray,
         maxLines = 1,

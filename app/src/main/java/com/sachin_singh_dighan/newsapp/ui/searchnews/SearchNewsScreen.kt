@@ -23,7 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.ui.component.BannerImage
 import com.sachin_singh_dighan.newsapp.ui.component.DescriptionText
@@ -68,7 +68,7 @@ fun SearchNewsScreenRoute(
 }
 
 @Composable
-fun SearchNewsScreen(uiState: UiState<List<Article>>, onNewsClick: (url: String) -> Unit) {
+fun SearchNewsScreen(uiState: UiState<List<ApiArticle>>, onNewsClick: (url: String) -> Unit) {
     when (uiState) {
         is UiState.Loading -> {
             ShowLoading()
@@ -79,7 +79,7 @@ fun SearchNewsScreen(uiState: UiState<List<Article>>, onNewsClick: (url: String)
             if (articles.isEmpty()) {
                 EmptyState(message = "No results found")
             } else {
-                SearchResults(articles = articles, onNewsClick = onNewsClick)
+                SearchResults(apiArticles = articles, onNewsClick = onNewsClick)
             }
         }
 
@@ -100,7 +100,7 @@ fun SearchBar(
         value = searchQuery,
         onValueChange = onSearchQueryChanged,
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text("Search articles...") },
+        placeholder = { Text("Search apiArticles...") },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -122,28 +122,28 @@ fun SearchBar(
 }
 
 @Composable
-fun SearchResults(articles: List<Article>, onNewsClick: (url: String) -> Unit) {
+fun SearchResults(apiArticles: List<ApiArticle>, onNewsClick: (url: String) -> Unit) {
     LazyColumn {
-        items(articles) { article ->
+        items(apiArticles) { article ->
             Article(article, onNewsClick)
         }
     }
 }
 
 @Composable
-fun Article(article: Article, onNewsClick: (url: String) -> Unit) {
+fun Article(apiArticle: ApiArticle, onNewsClick: (url: String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (article.url.isNotEmpty()) {
-                    onNewsClick(article.url)
+                if (apiArticle.url.isNotEmpty()) {
+                    onNewsClick(apiArticle.url)
                 }
             }
     ) {
-        BannerImage(article)
-        TitleText(article.title)
-        DescriptionText(article.description)
-        SourceText(article.source)
+        BannerImage(apiArticle)
+        TitleText(apiArticle.title)
+        DescriptionText(apiArticle.description)
+        SourceText(apiArticle.apiSource)
     }
 }

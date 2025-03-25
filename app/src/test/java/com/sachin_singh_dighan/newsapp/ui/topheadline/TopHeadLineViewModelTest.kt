@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.topheadline
 
 import app.cash.turbine.test
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Source
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiSource
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.DispatcherProvider
@@ -47,20 +47,20 @@ class TopHeadLineViewModelTest {
     private lateinit var defaultDispatcher: DispatcherProvider
 
     // Sample test data
-    private val mockArticles = listOf(
-        Article(
-            title = "Test Article 1",
+    private val mockApiArticles = listOf(
+        ApiArticle(
+            title = "Test ApiArticle 1",
             description = "This is a test article",
             url = "https://example.com/article1",
             imageUrl = "https://example.com/image1.jpg",
-            source = Source("cnn", "CNN"),
+            apiSource = ApiSource("cnn", "CNN"),
         ),
-        Article(
-            title = "Test Article 2",
+        ApiArticle(
+            title = "Test ApiArticle 2",
             description = "This is another test article",
             url = "https://example.com/article2",
             imageUrl = "https://example.com/image2.jpg",
-            source = Source("bbc", "BBC"),
+            apiSource = ApiSource("bbc", "BBC"),
         )
     )
 
@@ -79,7 +79,7 @@ class TopHeadLineViewModelTest {
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
         `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flow {
             delay(100) // Small delay
-            emit(mockArticles)
+            emit(mockApiArticles)
         })
 
         // When - ViewModel is initialized
@@ -95,7 +95,7 @@ class TopHeadLineViewModelTest {
         runTest {
             // Given
             `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-            `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockArticles))
+            `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockApiArticles))
 
             // When
             viewModel = TopHeadLineViewModel(
@@ -109,7 +109,7 @@ class TopHeadLineViewModelTest {
             viewModel.uiState.test {
                 val emission = expectMostRecentItem()
                 Assert.assertTrue(emission is UiState.Success)
-                Assert.assertEquals(mockArticles, (emission as UiState.Success).data)
+                Assert.assertEquals(mockApiArticles, (emission as UiState.Success).data)
                 cancelAndIgnoreRemainingEvents()
             }
 
@@ -117,7 +117,7 @@ class TopHeadLineViewModelTest {
             verify(topHeadLineRepository, times(1)).getTopHeadLinesByDefault()
 
             // Verify logger was called
-            verify(logger).d(TopHeadLineViewModel.TAG, mockArticles.toString())
+            verify(logger).d(TopHeadLineViewModel.TAG, mockApiArticles.toString())
         }
 
     @Test
@@ -173,7 +173,7 @@ class TopHeadLineViewModelTest {
     fun retryOperation_shouldResetErrorDialog_AND_fetchHeadlinesAgain() = runTest {
         // Given
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockArticles))
+        `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockApiArticles))
 
         // Initialize viewModel with network error
         `when`(networkHelper.isNetworkAvailable()).thenReturn(false)
@@ -183,7 +183,7 @@ class TopHeadLineViewModelTest {
         // Reset mocks and prepare for retry
         reset(topHeadLineRepository, networkHelper)
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
-        `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockArticles))
+        `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(mockApiArticles))
 
         // When
         viewModel.retryOperation()
@@ -193,7 +193,7 @@ class TopHeadLineViewModelTest {
         viewModel.uiState.test {
             val emission = expectMostRecentItem()
             Assert.assertTrue(emission is UiState.Success)
-            Assert.assertEquals(mockArticles, (emission as UiState.Success).data)
+            Assert.assertEquals(mockApiArticles, (emission as UiState.Success).data)
         }
 
         // Verify showErrorDialog is reset
@@ -229,7 +229,7 @@ class TopHeadLineViewModelTest {
     @Test
     fun fetchTopHeadlines_shouldHandleEmptyListFromRepository() = runTest {
         // Given
-        val emptyList = emptyList<Article>()
+        val emptyList = emptyList<ApiArticle>()
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
         `when`(topHeadLineRepository.getTopHeadLinesByDefault()).thenReturn(flowOf(emptyList))
 

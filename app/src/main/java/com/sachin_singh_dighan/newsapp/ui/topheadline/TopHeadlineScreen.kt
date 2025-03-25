@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.ui.component.ShowError
 import com.sachin_singh_dighan.newsapp.ui.component.ShowLoading
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -48,7 +48,7 @@ fun TopHeadlinesRoute(
 
 @Composable
 fun TopHeadlineScreen(
-    uiState: UiState<List<Article>>,
+    uiState: UiState<List<ApiArticle>>,
     viewModel: TopHeadLineViewModel,
     showErrorDialog: Boolean,
     errorMessage: String,
@@ -80,7 +80,7 @@ fun TopHeadlineScreen(
 }
 
 @Composable
-fun TopHeadlineList(list: List<Article>, onNewsClick: (url: String) -> Unit) {
+fun TopHeadlineList(list: List<ApiArticle>, onNewsClick: (url: String) -> Unit) {
     LazyColumn(Modifier.padding(8.dp)) {
         items(list) { article ->
             Article(article, onNewsClick)
@@ -89,19 +89,19 @@ fun TopHeadlineList(list: List<Article>, onNewsClick: (url: String) -> Unit) {
 }
 
 @Composable
-fun Article(article: Article, onNewsClick: (url: String) -> Unit) {
+fun Article(apiArticle: ApiArticle, onNewsClick: (url: String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if(article.url.isNotEmpty()){
-                    onNewsClick(article.url)
+                if(apiArticle.url.isNotEmpty()){
+                    onNewsClick(apiArticle.url)
                 }
             }
     ) {
-        BannerImage(article)
-        TitleText(article.title)
-        DescriptionText(article.description)
-        SourceText(article.source)
+        BannerImage(apiArticle)
+        TitleText(apiArticle.title)
+        DescriptionText(apiArticle.description)
+        SourceText(apiArticle.apiSource)
 }
 }

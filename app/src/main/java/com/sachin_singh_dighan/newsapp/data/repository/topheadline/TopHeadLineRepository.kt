@@ -2,8 +2,7 @@ package com.sachin_singh_dighan.newsapp.data.repository.topheadline
 
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
-import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -15,35 +14,35 @@ class TopHeadLineRepository @Inject constructor(
     private val networkService: NetworkService,
 ) {
 
-    fun getTopHeadLinesByDefault(): Flow<List<Article>> {
+    fun getTopHeadLinesByDefault(): Flow<List<ApiArticle>> {
         return flow {
             emit(networkService.getTopHeadLinesByCountry(AppConstant.NEWS_BY_DEFAULT))
         }.map {
-            it.articles
+            it.apiArticles
         }
     }
 
-    fun getTopHeadLinesByCategory(category: String): Flow<List<Article>> {
+    fun getTopHeadLinesByCategory(category: String): Flow<List<ApiArticle>> {
         return flow {
             emit(networkService.getTopHeadLinesByCategory(category))
         }.map {
-            it.articles
+            it.apiArticles
         }
     }
 
-    fun getTopHeadLinesByCountry(country: String): Flow<List<Article>> {
+    fun getTopHeadLinesByCountry(country: String): Flow<List<ApiArticle>> {
         return flow {
             emit(networkService.getTopHeadLinesByCountry(country))
         }.map {
-            it.articles
+            it.apiArticles
         }
     }
 
-    fun getTopHeadLinesByLanguage(language: String): Flow<List<Article>> {
+    fun getTopHeadLinesByLanguage(language: String): Flow<List<ApiArticle>> {
         return flow {
             emit(networkService.getTopHeadLinesByLanguage(language))
         }.map {
-            it.articles
+            it.apiArticles
         }
     }
 }

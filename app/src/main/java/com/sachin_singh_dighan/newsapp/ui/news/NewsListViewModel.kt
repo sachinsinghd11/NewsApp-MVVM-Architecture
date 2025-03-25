@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.news
 
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -23,7 +23,7 @@ class NewsListViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
     private val dispatcherProvider: DispatcherProvider,
-) : BaseViewModel<List<Article>>(networkHelper) {
+) : BaseViewModel<List<ApiArticle>>(networkHelper) {
 
     companion object {
         const val TAG = "NewsListViewModel"
@@ -70,7 +70,7 @@ class NewsListViewModel @Inject constructor(
     fun fetchNewsByLanguage(language: List<String>) {
         viewModelScope.launch(dispatcherProvider.main) {
             if (networkHelper.isNetworkAvailable()) {
-                val selectedLanguagesList = mutableListOf<Article>()
+                val selectedLanguagesList = mutableListOf<ApiArticle>()
                 topHeadLineRepository.getTopHeadLinesByLanguage(language[0])
                     .zip(topHeadLineRepository.getTopHeadLinesByLanguage(language[1])) { language1, language2 ->
                         val seed = Random.nextInt()

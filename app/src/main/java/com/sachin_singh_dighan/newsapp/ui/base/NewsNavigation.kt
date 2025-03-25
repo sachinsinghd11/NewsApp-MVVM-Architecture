@@ -17,13 +17,9 @@ import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionRou
 import com.sachin_singh_dighan.newsapp.ui.mainscreen.MainScreenRoute
 import com.sachin_singh_dighan.newsapp.ui.news.NewsListRoute
 import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourceRoute
+import com.sachin_singh_dighan.newsapp.ui.offlinearticle.OfflineArticleRoute
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsScreenRoute
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadlinesRoute
-
-object NavigationHelper {
-    fun List<String>.toNavigationString() = joinToString(",")
-    fun String.fromNavigationString() = split(",")
-}
 
 sealed class Route(val name: String) {
     data object MainScreen : Route("MainScreen")
@@ -36,6 +32,8 @@ sealed class Route(val name: String) {
         fun createRoute(value: String = "", valueList: String = "", type: String) =
             "NewsList/$value/${valueList}/$type"
     }
+
+    data object OfflineArticle : Route("OfflineArticle")
 }
 
 @Composable
@@ -69,6 +67,10 @@ fun NewsNavHost() {
 
                         AppConstant.SEARCH -> {
                             navController.navigate(route = Route.SearchNews.name)
+                        }
+
+                        AppConstant.OFFINE_ARTICLE -> {
+                            navController.navigate(route = Route.OfflineArticle.name)
                         }
                     }
                 }
@@ -146,6 +148,14 @@ fun NewsNavHost() {
                     opeCustomChromeTab(context, url)
                 }
             )
+        }
+        composable(route = Route.OfflineArticle.name) {
+            OfflineArticleRoute(
+                onNewsClick = { url ->
+                    opeCustomChromeTab(context, url)
+                }
+            )
+
         }
     }
 }

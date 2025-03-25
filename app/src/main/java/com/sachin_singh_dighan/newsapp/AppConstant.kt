@@ -2,6 +2,7 @@ package com.sachin_singh_dighan.newsapp
 
 import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
+import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 
 object AppConstant {
 
@@ -27,7 +28,7 @@ object AppConstant {
     const val NEWS_TYPE_CODE = "news_type_code"
 
     //Network error msg
-    const val NETWORK_ERROR = "Please Check Network Connection"
+    const val NETWORK_ERROR = "Network error. Please check your connection."
 
     const val NO_DATA_FOUND = "No Data Found"
 
@@ -42,6 +43,16 @@ object AppConstant {
 
     //argument for launguage
     const val NEW_BY_LANGUAGE_CODE = "news_by_language_code"
+
+
+    //Main Section List
+    val MAIN_SECTION_LIST = listOf(
+        MainSection(TOP_HEADLINES),
+        MainSection(NEWS_SOURCES),
+        MainSection(COUNTRIES),
+        MainSection(LANGUAGES),
+        MainSection(SEARCH)
+    )
 
     //Country name with code
 

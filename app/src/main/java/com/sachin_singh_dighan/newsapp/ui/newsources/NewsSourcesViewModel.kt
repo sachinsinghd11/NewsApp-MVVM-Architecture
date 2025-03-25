@@ -3,13 +3,13 @@ package com.sachin_singh_dighan.newsapp.ui.newsources
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
-import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewSourcesRepository
+import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewsSourcesRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
+import com.sachin_singh_dighan.newsapp.utils.DispatcherProvider
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -18,9 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsSourcesViewModel @Inject constructor(
-    private val newSourcesRepository: NewSourcesRepository,
+    private val newsSourcesRepository: NewsSourcesRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
+    private val dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel<List<Sources>>(networkHelper) {
 
     companion object {
@@ -32,10 +33,10 @@ class NewsSourcesViewModel @Inject constructor(
     }
 
     private fun fetchNewSource() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             if (networkHelper.isNetworkAvailable()) {
-                newSourcesRepository.getNewResources()
-                    .flowOn(Dispatchers.IO)
+                newsSourcesRepository.getNewResources()
+                    .flowOn(dispatcherProvider.io)
                     .catch { e ->
                         handleError(e)
                         _uiState.value = UiState.Error(e.toString())

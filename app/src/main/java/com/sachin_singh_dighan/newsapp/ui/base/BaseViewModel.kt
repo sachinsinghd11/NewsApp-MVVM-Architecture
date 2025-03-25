@@ -1,6 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.base
 
 import androidx.lifecycle.ViewModel
+import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +28,7 @@ abstract class BaseViewModel<T>(private val networkHelper: NetworkHelper) : View
     // Handle errors
     fun handleError(exception: Throwable) {
         val errorMsg = when (exception) {
-            is IOException -> "Network error. Please check your connection."
+            is IOException -> AppConstant.NETWORK_ERROR
             else -> exception.message ?: "An unknown error occurred"
         }
 

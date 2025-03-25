@@ -13,7 +13,7 @@ object AppConstant {
     const val COUNTRIES = "Countries"
     const val LANGUAGES = "Languages"
     const val SEARCH = "Search"
-    const val OFFINE_ARTICLE = "Offline Articles Screen"
+    const val OFFLINE_ARTICLE = "Offline Articles Screen"
     const val NEWS_LIST = "news_list"
 
     //for network service
@@ -53,7 +53,7 @@ object AppConstant {
         MainSection(COUNTRIES),
         MainSection(LANGUAGES),
         MainSection(SEARCH),
-        MainSection(OFFINE_ARTICLE),
+        MainSection(OFFLINE_ARTICLE),
     )
 
     //Country name with code

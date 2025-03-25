@@ -3,9 +3,11 @@ package com.sachin_singh_dighan.newsapp.data.repository.offlineArticles
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.data.local.DatabaseService
 import com.sachin_singh_dighan.newsapp.data.local.entity.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.TopHeadLinesResponse
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.toArticleEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -19,6 +21,8 @@ class OfflineArticleRepository @Inject constructor(
     fun getArticles(country: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getTopHeadLinesByCountry(country))
+        }.catch {
+            emit(TopHeadLinesResponse())
         }.map {
             it.apiArticles.map { apiArticle ->
                 apiArticle.toArticleEntity()
@@ -26,6 +30,8 @@ class OfflineArticleRepository @Inject constructor(
         }.flatMapLatest { articles ->
             flow {
                 emit(databaseService.deleteAllAndInsertAll(articles))
+            }.catch {
+                emit(Unit)
             }
         }.flatMapLatest {
             databaseService.getArticles()

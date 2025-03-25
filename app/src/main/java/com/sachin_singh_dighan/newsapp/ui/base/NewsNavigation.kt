@@ -69,7 +69,7 @@ fun NewsNavHost() {
                             navController.navigate(route = Route.SearchNews.name)
                         }
 
-                        AppConstant.OFFINE_ARTICLE -> {
+                        AppConstant.OFFLINE_ARTICLE -> {
                             navController.navigate(route = Route.OfflineArticle.name)
                         }
                     }

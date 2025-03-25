@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.data.repository.topheadline
 
 import com.sachin_singh_dighan.newsapp.AppConstant
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Source
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiSource
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.TopHeadLinesResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -27,27 +27,27 @@ class TopHeadLineRepositoryTest {
     private lateinit var topHeadLineRepository: TopHeadLineRepository
 
     // Sample test data
-    private val mockArticles = listOf(
-        Article(
-            title = "Test Article 1",
+    private val mockApiArticles = listOf(
+        ApiArticle(
+            title = "Test ApiArticle 1",
             description = "This is a test article",
             url = "https://example.com/article1",
             imageUrl = "https://example.com/image1.jpg",
-            source = Source("cnn", "CNN"),
+            apiSource = ApiSource("cnn", "CNN"),
         ),
-        Article(
-            title = "Test Article 2",
+        ApiArticle(
+            title = "Test ApiArticle 2",
             description = "This is another test article",
             url = "https://example.com/article2",
             imageUrl = "https://example.com/image2.jpg",
-            source = Source("bbc", "BBC"),
+            apiSource = ApiSource("bbc", "BBC"),
         )
     )
 
     private val mockResponse = TopHeadLinesResponse(
         status = "ok",
-        totalResults = mockArticles.size,
-        articles = mockArticles
+        totalResults = mockApiArticles.size,
+        apiArticles = mockApiArticles
     )
 
     @Before
@@ -66,7 +66,7 @@ class TopHeadLineRepositoryTest {
 
         // Then
         verify(networkService).getTopHeadLinesByCountry(AppConstant.NEWS_BY_DEFAULT)
-        assertEquals(mockArticles, result)
+        assertEquals(mockApiArticles, result)
     }
 
     @Test
@@ -81,7 +81,7 @@ class TopHeadLineRepositoryTest {
 
         // Then
         verify(networkService).getTopHeadLinesByCategory(category)
-        assertEquals(mockArticles, result)
+        assertEquals(mockApiArticles, result)
     }
 
     @Test
@@ -96,7 +96,7 @@ class TopHeadLineRepositoryTest {
 
         // Then
         verify(networkService).getTopHeadLinesByCountry(country)
-        assertEquals(mockArticles, result)
+        assertEquals(mockApiArticles, result)
     }
 
     @Test
@@ -111,7 +111,7 @@ class TopHeadLineRepositoryTest {
 
         // Then
         verify(networkService).getTopHeadLinesByLanguage(language)
-        assertEquals(mockArticles, result)
+        assertEquals(mockApiArticles, result)
     }
 
     @Test

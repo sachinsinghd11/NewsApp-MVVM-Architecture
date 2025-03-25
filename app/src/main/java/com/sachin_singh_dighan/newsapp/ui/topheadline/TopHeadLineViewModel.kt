@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.topheadline
 
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -10,7 +10,6 @@ import com.sachin_singh_dighan.newsapp.utils.DispatcherProvider
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import com.sachin_singh_dighan.newsapp.utils.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ class TopHeadLineViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
     private val dispatcherProvider: DispatcherProvider,
-) : BaseViewModel<List<Article>>(networkHelper) {
+) : BaseViewModel<List<ApiArticle>>(networkHelper) {
 
     companion object {
         const val TAG = "TopHeadLineViewModel"

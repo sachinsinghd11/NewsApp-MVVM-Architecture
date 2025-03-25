@@ -2,8 +2,8 @@ package com.sachin_singh_dighan.newsapp.ui.news
 
 import app.cash.turbine.test
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Source
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiSource
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
@@ -62,27 +62,27 @@ class NewsListViewModelTest {
     fun fetchNewsByCategory_WHEN_networkAvailableReturnsSuccess() = runTest {
         // Arrange
         val sourceId = "bbc-news"
-        val mockArticles = listOf(
-            Article(
-                title = "Test Article 1",
+        val mockApiArticles = listOf(
+            ApiArticle(
+                title = "Test ApiArticle 1",
                 description = "Test Description 1",
                 url = "https://example.com/article1",
                 imageUrl = "https://example.com/image1.jpg",
-                source = Source("cnn", "CNN"),
+                apiSource = ApiSource("cnn", "CNN"),
             ),
-            Article(
-                title = "Test Article 2",
+            ApiArticle(
+                title = "Test ApiArticle 2",
                 description = "Test Description 2",
                 url = "https://example.com/article2",
                 imageUrl = "https://example.com/image2.jpg",
-                source = Source("bbc", "BBC"),
+                apiSource = ApiSource("bbc", "BBC"),
             )
         )
 
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
         `when`(topHeadLineRepository.getTopHeadLinesByCategory(sourceId)).thenReturn(
             flowOf(
-                mockArticles
+                mockApiArticles
             )
         )
 
@@ -93,7 +93,7 @@ class NewsListViewModelTest {
         viewModel.uiState.test {
             val emittedItem = awaitItem()
             assertTrue(emittedItem is UiState.Success)
-            assertEquals(mockArticles, (emittedItem as UiState.Success).data)
+            assertEquals(mockApiArticles, (emittedItem as UiState.Success).data)
             cancelAndIgnoreRemainingEvents()
         }
 
@@ -153,20 +153,20 @@ class NewsListViewModelTest {
     fun fetchNewsByCountry_WHEN_networkAvailableReturnsSuccess() = runTest {
         // Arrange
         val country = "us"
-        val mockArticles = listOf(
-            Article(
-                title = "US News Article",
+        val mockApiArticles = listOf(
+            ApiArticle(
+                title = "US News ApiArticle",
                 description = "US News Description",
                 url = "https://example.com/us-news",
                 imageUrl = "https://example.com/us-image.jpg",
-                source = Source("cnn", "CNN"),
+                apiSource = ApiSource("cnn", "CNN"),
             )
         )
 
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
         `when`(topHeadLineRepository.getTopHeadLinesByCountry(country)).thenReturn(
             flowOf(
-                mockArticles
+                mockApiArticles
             )
         )
 
@@ -177,7 +177,7 @@ class NewsListViewModelTest {
         viewModel.uiState.test {
             val emittedItem = awaitItem()
             assertTrue(emittedItem is UiState.Success)
-            assertEquals(mockArticles, (emittedItem as UiState.Success).data)
+            assertEquals(mockApiArticles, (emittedItem as UiState.Success).data)
             cancelAndIgnoreRemainingEvents()
         }
 
@@ -211,42 +211,42 @@ class NewsListViewModelTest {
         // Arrange
         val languages = listOf("en", "fr")
 
-        val englishArticles = listOf(
-            Article(
-                title = "English Article 1",
+        val englishApiArticles = listOf(
+            ApiArticle(
+                title = "English ApiArticle 1",
                 description = "English Description 1",
                 url = "https://example.com/english1",
                 imageUrl = "https://example.com/image1.jpg",
-                source = Source("cnn", "CNN"),
+                apiSource = ApiSource("cnn", "CNN"),
             ),
-            Article(
-                title = "English Article 2",
+            ApiArticle(
+                title = "English ApiArticle 2",
                 description = "English Description 2",
                 url = "https://example.com/english2",
                 imageUrl = "https://example.com/image1.jpg",
-                source = Source("cnn", "CNN"),
+                apiSource = ApiSource("cnn", "CNN"),
             )
         )
 
-        val frenchArticles = listOf(
-            Article(
-                title = "French Article 1",
+        val frenchApiArticles = listOf(
+            ApiArticle(
+                title = "French ApiArticle 1",
                 description = "French Description 1",
                 url = "https://example.com/french1",
                 imageUrl = "https://example.com/image1.jpg",
-                source = Source("cnn", "CNN"),
+                apiSource = ApiSource("cnn", "CNN"),
             )
         )
 
         `when`(networkHelper.isNetworkAvailable()).thenReturn(true)
         `when`(topHeadLineRepository.getTopHeadLinesByLanguage(languages[0])).thenReturn(
             flowOf(
-                englishArticles
+                englishApiArticles
             )
         )
         `when`(topHeadLineRepository.getTopHeadLinesByLanguage(languages[1])).thenReturn(
             flowOf(
-                frenchArticles
+                frenchApiArticles
             )
         )
 
@@ -258,18 +258,18 @@ class NewsListViewModelTest {
             val emittedItem = awaitItem()
             assertTrue(emittedItem is UiState.Success)
 
-            // Combined list should contain all articles
+            // Combined list should contain all apiArticles
             val combinedArticles = (emittedItem as UiState.Success).data
             assertEquals(3, combinedArticles.size)
 
-            // Check that all articles from both languages are present
+            // Check that all apiArticles from both languages are present
             val titles = combinedArticles.map { it.title }.toSet()
             assertTrue(
                 titles.containsAll(
                     setOf(
-                        "English Article 1",
-                        "English Article 2",
-                        "French Article 1"
+                        "English ApiArticle 1",
+                        "English ApiArticle 2",
+                        "French ApiArticle 1"
                     )
                 )
             )

@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.searchnews
 
 import androidx.lifecycle.viewModelScope
 import com.sachin_singh_dighan.newsapp.AppConstant
-import com.sachin_singh_dighan.newsapp.data.model.topheadline.Article
+import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.data.repository.searchnews.SearchNewsRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
@@ -27,7 +27,7 @@ class SearchNewsViewModel @Inject constructor(
     private val searchNewsRepository: SearchNewsRepository,
     private val networkHelper: NetworkHelper,
     private val logger: Logger,
-) : BaseViewModel<List<Article>>(networkHelper) {
+) : BaseViewModel<List<ApiArticle>>(networkHelper) {
 
     companion object {
         const val TAG = "SearchNewsViewModel"

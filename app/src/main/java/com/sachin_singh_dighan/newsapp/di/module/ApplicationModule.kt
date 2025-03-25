@@ -1,8 +1,13 @@
 package com.sachin_singh_dighan.newsapp.di.module
 
 import android.content.Context
+import androidx.room.Room
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
+import com.sachin_singh_dighan.newsapp.data.local.AppDatabase
+import com.sachin_singh_dighan.newsapp.data.local.AppDatabaseService
+import com.sachin_singh_dighan.newsapp.data.local.DatabaseService
 import com.sachin_singh_dighan.newsapp.di.BaseUrl
+import com.sachin_singh_dighan.newsapp.di.DatabaseName
 import com.sachin_singh_dighan.newsapp.utils.AuthInterceptor
 import com.sachin_singh_dighan.newsapp.utils.DefaultDispatcherProvider
 import com.sachin_singh_dighan.newsapp.utils.DispatcherProvider
@@ -66,4 +71,29 @@ class ApplicationModule {
     @Singleton
     fun provideDispatcherProvider(): DispatcherProvider = DefaultDispatcherProvider()
 
+    @DatabaseName
+    @Provides
+    fun provideDatabaseName(): String = "news_database"
+
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+        @DatabaseName databaseName: String
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            databaseName
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService(appDatabase: AppDatabase): DatabaseService {
+        return AppDatabaseService(appDatabase)
+    }
+
 }
+

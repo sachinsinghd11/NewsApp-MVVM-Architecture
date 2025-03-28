@@ -14,6 +14,9 @@ object AppConstant {
     const val LANGUAGES = "Languages"
     const val SEARCH = "Search"
     const val OFFLINE_ARTICLE = "Offline Articles Screen"
+    const val WORK_MANAGER_ONE_TIME_REQUEST = "Work manager one time request"
+    const val WORK_MANAGER_PERIODIC_REQUEST = "Work manager periodic request"
+
     const val NEWS_LIST = "news_list"
 
     //for network service
@@ -46,15 +49,27 @@ object AppConstant {
     const val NEW_BY_LANGUAGE_CODE = "news_by_language_code"
 
 
+    //WorkManager and Notification
+    const val UNIQUE_WORK_NAME = "newsAppPeriodicWork"
+    const val MORNING_UPDATE_TIME = 5
+    const val NOTIFICATION_ID = 1
+    const val NOTIFICATION_CHANNEL_ID = "news_channel"
+    const val NOTIFICATION_CHANNEL_NAME = "News"
+    const val NOTIFICATION_CONTENT_TITLE = "News"
+    const val NOTIFICATION_CONTENT_TEXT = "Check out the latest news ..."
+
     //Main Section List
     val MAIN_SECTION_LIST = listOf(
         MainSection(TOP_HEADLINES),
+        MainSection(OFFLINE_ARTICLE),
+        //MainSection(WORK_MANAGER_ONE_TIME_REQUEST),
+        //MainSection(WORK_MANAGER_PERIODIC_REQUEST),
         MainSection(NEWS_SOURCES),
         MainSection(COUNTRIES),
         MainSection(LANGUAGES),
         MainSection(SEARCH),
-        MainSection(OFFLINE_ARTICLE),
-    )
+
+        )
 
     //Country name with code
 

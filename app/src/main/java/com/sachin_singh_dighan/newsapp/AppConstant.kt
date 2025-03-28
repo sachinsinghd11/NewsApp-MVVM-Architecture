@@ -14,6 +14,7 @@ object AppConstant {
     const val LANGUAGES = "Languages"
     const val SEARCH = "Search"
     const val OFFLINE_ARTICLE = "Offline Articles Screen"
+    const val PAGINATION_SCREEN = "TopHeadlines Pagination"
     const val WORK_MANAGER_ONE_TIME_REQUEST = "Work manager one time request"
     const val WORK_MANAGER_PERIODIC_REQUEST = "Work manager periodic request"
 
@@ -28,6 +29,10 @@ object AppConstant {
     const val NEWS_BY_CHANNEL_VALUE = "channel"
     const val NEWS_BY_COUNTRY_VALUE = "country"
     const val NEWS_BY_LANGUAGE_VALUE = "language"
+
+    //paging size
+    const val INITIAL_PAGE = 1
+    const val PAGE_SIZE = 10
 
     const val NEWS_TYPE_CODE = "news_type_code"
 
@@ -62,6 +67,7 @@ object AppConstant {
     val MAIN_SECTION_LIST = listOf(
         MainSection(TOP_HEADLINES),
         MainSection(OFFLINE_ARTICLE),
+        MainSection(PAGINATION_SCREEN),
         //MainSection(WORK_MANAGER_ONE_TIME_REQUEST),
         //MainSection(WORK_MANAGER_PERIODIC_REQUEST),
         MainSection(NEWS_SOURCES),

@@ -2,6 +2,7 @@ package com.sachin_singh_dighan.newsapp.di.module
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.data.local.AppDatabase
 import com.sachin_singh_dighan.newsapp.data.local.AppDatabaseService
@@ -94,6 +95,20 @@ class ApplicationModule {
     fun provideDatabaseService(appDatabase: AppDatabase): DatabaseService {
         return AppDatabaseService(appDatabase)
     }
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
+        return WorkManager.getInstance(context)
+    }
+
+    /*@Provides
+    @Singleton
+    fun provideTopHeadlineSyncScheduler(
+        @ApplicationContext context: Context,
+    ): TopHeadlineSyncScheduler {
+        return TopHeadlineSyncScheduler(context)
+    }*/
 
 }
 

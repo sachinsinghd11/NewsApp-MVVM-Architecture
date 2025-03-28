@@ -25,8 +25,8 @@ class TopHeadlineSyncScheduler @Inject constructor(
             //.setRequiresBatteryNotLow(true)
             .build()
 
-        // Calculate delay to next 23:45
-        val delay = calculateDelayTo2345()
+        // Calculate delay to next 5 Am
+        val delay = calculateDelayTo5Am()
 
         // Create periodic work request
         val syncWorkRequest = PeriodicWorkRequestBuilder<TopHeadlinesSyncWorker>(
@@ -45,7 +45,7 @@ class TopHeadlineSyncScheduler @Inject constructor(
         )
     }
 
-    private fun calculateDelayTo2345(): Long {
+    private fun calculateDelayTo5Am(): Long {
         val currentTime = Calendar.getInstance()
         val targetTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, AppConstant.MORNING_UPDATE_TIME)

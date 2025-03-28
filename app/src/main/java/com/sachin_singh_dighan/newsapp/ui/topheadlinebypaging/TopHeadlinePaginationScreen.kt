@@ -61,7 +61,7 @@ fun TopHeadlinePaginationScreen(
 
             loadState.refresh is LoadState.Error -> {
                 val error = articles.loadState.refresh as LoadState.Error
-                ShowError(error.error.localizedMessage!!)
+                ShowError(error.error.localizedMessage ?: "Unknown error occurred")
             }
 
             loadState.append is LoadState.Loading -> {
@@ -70,7 +70,7 @@ fun TopHeadlinePaginationScreen(
 
             loadState.append is LoadState.Error -> {
                 val error = articles.loadState.append as LoadState.Error
-                ShowError(error.error.localizedMessage!!)
+                ShowError(error.error.localizedMessage ?: "Unknown error occurred")
             }
         }
     }
@@ -80,8 +80,10 @@ fun TopHeadlinePaginationScreen(
 @Composable
 fun ArticleList(articles: LazyPagingItems<ApiArticle>, onNewsClick: (url: String) -> Unit) {
     LazyColumn {
-        items(articles.itemCount, key = { index -> articles[index]!!.url }) { index ->
-            Article(articles[index]!!, onNewsClick)
+        items(articles.itemCount) { index ->
+            articles[index]?.let { article ->
+                Article(article, onNewsClick)
+            }
         }
     }
 }
@@ -144,11 +146,13 @@ fun DescriptionText(description: String?) {
 
 @Composable
 fun SourceText(source: ApiSource) {
-    Text(
-        text = source.name,
-        style = MaterialTheme.typography.titleSmall,
-        color = Color.Gray,
-        maxLines = 1,
-        modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 8.dp)
-    )
+    if (source.name.isNotEmpty()) {
+        Text(
+            text = source.name,
+            style = MaterialTheme.typography.titleSmall,
+            color = Color.Gray,
+            maxLines = 1,
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 8.dp)
+        )
+    }
 }

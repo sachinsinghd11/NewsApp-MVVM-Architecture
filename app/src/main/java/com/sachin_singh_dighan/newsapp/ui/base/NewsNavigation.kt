@@ -6,7 +6,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +20,7 @@ import com.sachin_singh_dighan.newsapp.ui.newsources.NewsSourceRoute
 import com.sachin_singh_dighan.newsapp.ui.offlinearticle.OfflineArticleRoute
 import com.sachin_singh_dighan.newsapp.ui.searchnews.SearchNewsScreenRoute
 import com.sachin_singh_dighan.newsapp.ui.topheadline.TopHeadlinesRoute
-import com.sachin_singh_dighan.newsapp.ui.topheadlinesync.TopHeadlineSyncViewModel
+import com.sachin_singh_dighan.newsapp.ui.topheadlinebypaging.TopHeadlinePaginationRoute
 
 sealed class Route(val name: String) {
     data object MainScreen : Route("MainScreen")
@@ -36,14 +35,13 @@ sealed class Route(val name: String) {
     }
 
     data object OfflineArticle : Route("OfflineArticle")
+    data object TopHeadlinesPagination : Route("TopHeadlinesPagination")
     //data object WorkMangerOneTimeRequest : Route("WMOneTimeRequest")
     //data object WorkMangerPeriodicRequest : Route("WMPeriodicRequest")
 }
 
 @Composable
-fun NewsNavHost(
-    viewModel: TopHeadlineSyncViewModel = hiltViewModel()
-) {
+fun NewsNavHost() {
     val context = LocalContext.current
     val navController = rememberNavController()
 
@@ -77,6 +75,10 @@ fun NewsNavHost(
 
                         AppConstant.OFFLINE_ARTICLE -> {
                             navController.navigate(route = Route.OfflineArticle.name)
+                        }
+
+                        AppConstant.PAGINATION_SCREEN -> {
+                            navController.navigate(route = Route.TopHeadlinesPagination.name)
                         }
                         /*AppConstant.WORK_MANAGER_ONE_TIME_REQUEST -> {
                             viewModel.scheduleOneTimeSync()
@@ -169,7 +171,13 @@ fun NewsNavHost(
                     opeCustomChromeTab(context, url)
                 }
             )
-
+        }
+        composable(route = Route.TopHeadlinesPagination.name) {
+            TopHeadlinePaginationRoute(
+                onNewsClick = { url ->
+                    opeCustomChromeTab(context, url)
+                }
+            )
         }
     }
 }

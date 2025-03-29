@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.countryselection
 
 import app.cash.turbine.test
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.data.repository.countryselection.CountrySelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState

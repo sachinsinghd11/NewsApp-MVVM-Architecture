@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.data.repository.countryselection
 
 import app.cash.turbine.test
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

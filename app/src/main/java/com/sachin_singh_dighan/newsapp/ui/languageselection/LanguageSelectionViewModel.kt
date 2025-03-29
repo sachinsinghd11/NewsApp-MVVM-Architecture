@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.languageselection
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData
 import com.sachin_singh_dighan.newsapp.data.repository.languageselection.LanguageSelectionRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel

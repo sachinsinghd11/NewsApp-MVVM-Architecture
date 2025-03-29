@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.ui.countryselection.CountrySelectionRoute
 import com.sachin_singh_dighan.newsapp.ui.languageselection.LanguageSelectionRoute
 import com.sachin_singh_dighan.newsapp.ui.mainscreen.MainScreenRoute

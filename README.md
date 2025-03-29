@@ -66,7 +66,7 @@
     - Filter
     - DistinctUntilChanged
     - FlatMapLatest
-- Offline news
+- Offline First Architecture
 - Pagination
 - Unit Test
     - Mockito

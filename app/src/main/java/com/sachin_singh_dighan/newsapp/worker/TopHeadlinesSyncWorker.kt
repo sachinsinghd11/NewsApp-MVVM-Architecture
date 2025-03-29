@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.R
 import com.sachin_singh_dighan.newsapp.data.repository.topheadlinesync.SyncStatus
 import com.sachin_singh_dighan.newsapp.data.repository.topheadlinesync.TopHeadlinesSyncRepository

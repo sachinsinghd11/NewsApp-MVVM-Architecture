@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.mainscreen
 
 import app.cash.turbine.test
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import com.sachin_singh_dighan.newsapp.data.repository.mainscreen.MainRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState

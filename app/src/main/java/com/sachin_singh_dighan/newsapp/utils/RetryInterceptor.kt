@@ -1,6 +1,5 @@
 package com.sachin_singh_dighan.newsapp.utils
 
-import com.sachin_singh_dighan.newsapp.AppConstant
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.net.SocketTimeoutException

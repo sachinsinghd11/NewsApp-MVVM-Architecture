@@ -1,4 +1,4 @@
-package com.sachin_singh_dighan.newsapp
+package com.sachin_singh_dighan.newsapp.utils
 
 import com.sachin_singh_dighan.newsapp.data.model.countryselection.CountrySelection
 import com.sachin_singh_dighan.newsapp.data.model.languageselection.LanguageData

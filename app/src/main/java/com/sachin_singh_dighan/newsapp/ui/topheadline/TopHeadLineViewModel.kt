@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.topheadline
 
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel

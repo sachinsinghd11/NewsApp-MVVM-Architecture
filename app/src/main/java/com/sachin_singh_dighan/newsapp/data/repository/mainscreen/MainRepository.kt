@@ -1,6 +1,6 @@
 package com.sachin_singh_dighan.newsapp.data.repository.mainscreen
 
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.mainscreen.MainSection
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.Flow

@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.data.repository.topheadlinepaging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 

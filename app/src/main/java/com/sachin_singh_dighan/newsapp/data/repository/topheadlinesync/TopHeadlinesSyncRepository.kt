@@ -1,6 +1,6 @@
 package com.sachin_singh_dighan.newsapp.data.repository.topheadlinesync
 
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.api.NetworkService
 import com.sachin_singh_dighan.newsapp.data.local.DatabaseService
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.toArticleEntity

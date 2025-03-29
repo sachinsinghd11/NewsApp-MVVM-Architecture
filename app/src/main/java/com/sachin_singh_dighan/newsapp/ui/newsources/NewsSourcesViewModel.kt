@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.newsources
 
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.newsources.Sources
 import com.sachin_singh_dighan.newsapp.data.repository.newsources.NewsSourcesRepository
 import com.sachin_singh_dighan.newsapp.ui.base.BaseViewModel

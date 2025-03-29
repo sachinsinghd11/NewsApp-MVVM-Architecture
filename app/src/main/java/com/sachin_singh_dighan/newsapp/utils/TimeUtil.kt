@@ -1,6 +1,5 @@
 package com.sachin_singh_dighan.newsapp.utils
 
-import com.sachin_singh_dighan.newsapp.AppConstant
 import java.util.Calendar
 
 object TimeUtil {

@@ -2,7 +2,7 @@ package com.sachin_singh_dighan.newsapp.ui.offlinearticle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.local.entity.Article
 import com.sachin_singh_dighan.newsapp.data.repository.offlineArticles.OfflineArticleRepository
 import com.sachin_singh_dighan.newsapp.ui.common.UiState

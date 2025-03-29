@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.news
 
 import app.cash.turbine.test
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiArticle
 import com.sachin_singh_dighan.newsapp.data.model.topheadline.ApiSource
 import com.sachin_singh_dighan.newsapp.data.repository.topheadline.TopHeadLineRepository

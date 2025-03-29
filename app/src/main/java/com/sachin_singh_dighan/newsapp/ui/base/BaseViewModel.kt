@@ -1,7 +1,7 @@
 package com.sachin_singh_dighan.newsapp.ui.base
 
 import androidx.lifecycle.ViewModel
-import com.sachin_singh_dighan.newsapp.AppConstant
+import com.sachin_singh_dighan.newsapp.utils.AppConstant
 import com.sachin_singh_dighan.newsapp.ui.common.UiState
 import com.sachin_singh_dighan.newsapp.utils.NetworkHelper
 import kotlinx.coroutines.flow.MutableStateFlow

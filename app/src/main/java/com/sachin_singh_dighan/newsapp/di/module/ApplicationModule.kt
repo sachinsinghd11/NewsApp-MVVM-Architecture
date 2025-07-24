@@ -42,14 +42,21 @@ class ApplicationModule {
 
     @Provides
     @Singleton
+    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor {
+        return AuthInterceptor(context)
+    }
+
+    @Provides
+    @Singleton
     fun provideNetworkService(
         @BaseUrl baseUrl: String,
-        gsonConverterFactory: GsonConverterFactory
+        gsonConverterFactory: GsonConverterFactory,
+        authInterceptor: AuthInterceptor
     ): NetworkService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-        val client = OkHttpClient.Builder().addInterceptor(AuthInterceptor())
+        val client = OkHttpClient.Builder().addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor).addInterceptor(RetryInterceptor(3)).build()
         return Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(gsonConverterFactory)
             .client(client).build().create(NetworkService::class.java)

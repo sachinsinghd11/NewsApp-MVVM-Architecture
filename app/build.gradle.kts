@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -18,16 +20,30 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+            //API key from local.properties
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "NEWS_API_KEY", "\"${properties["NEWS_API_KEY"] ?: ""}\"")
+        buildConfigField("String", "BASE_URL", "\"${properties["BASE_URL"] ?: "https://newsapi.org/v2/"}\"")
+
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            //Remove Api key from release build for additional security
+            buildConfigField("String", "NEWS_API_KEY", "\"\"")
         }
+
+        debug {
+            isMinifyEnabled = false
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -40,6 +56,7 @@ android {
     buildFeatures {
         viewBinding  = true
         compose = true
+        buildConfig = true
     }
     buildToolsVersion = "35.0.0"
 }
@@ -112,4 +129,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.9")
     testImplementation(kotlin("test"))
+    
+    // Security for encrypted storage
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }

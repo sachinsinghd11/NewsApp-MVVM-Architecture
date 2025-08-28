@@ -9,6 +9,7 @@ import javax.inject.Singleton
 @Singleton
 interface NetworkService {
 
+
     @GET("top-headlines")
     suspend fun getTopHeadLinesByCategory(@Query("category") category: String): TopHeadLinesResponse
 

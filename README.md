@@ -303,7 +303,7 @@ debugImplementation("androidx.compose.ui:ui-test-manifest")
 </p>
 
 ## 🚀 About Me
-Hi there! My name is Nitin Londhe, I work as a Software Developer and like to expand my skill set in my spare time.
+Hi there! My name is Sachin Singh Dighan, I work as a Software Developer and like to expand my skill set in my spare time.
 
 If you have any questions or want to connect, feel free to reach out to me on :
 

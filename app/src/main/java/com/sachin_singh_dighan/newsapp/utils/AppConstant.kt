@@ -20,8 +20,16 @@ object AppConstant {
 
     const val NEWS_LIST = "news_list"
 
+    //endpoints
+    const val TOP_HEADLINES_ENDPOINT = "top-headlines"
+    const val EVERYTHING = "everything"
+    const val SOURCES = "sources"
+
+
+
+
     //for network service
-    const val API_KEY = "5e59e08053df4d13a5d4ff6fb1b228d0"
+    //const val API_KEY = BuildConfig.NEWS_API_KEY//"5e59e08053df4d13a5d4ff6fb1b228d0"
 
     //keys for distinguishing between news type
     const val NEWS_BY_DEFAULT = "us"

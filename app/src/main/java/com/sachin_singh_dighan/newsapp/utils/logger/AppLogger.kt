@@ -7,4 +7,12 @@ class AppLogger : Logger {
         Log.d(tag, message)
     }
 
+    override fun e(tag: String, message: String) {
+        Log.e(tag, message)
+    }
+
+    override fun w(tag: String, message: String) {
+        Log.w(tag, message)
+    }
+
 }

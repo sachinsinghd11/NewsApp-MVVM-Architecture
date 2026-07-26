@@ -13,4 +13,59 @@
 .externalNativeBuild
 .cxx
 local.properties
+gradle.properties
+gradle.properties.backup
 /.idea
+
+
+# Release keystore files
+*.keystore
+*.jks
+*.p12
+*.p8
+key.properties
+keystore.properties
+
+# Generated APK/AAB files
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Release outputs
+/app/release/
+/app/build/outputs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+secrets.properties
+
+# API keys and secrets (specific patterns only)
+**/secrets/
+**/*secret*.txt
+**/*secret*.json
+**/*secret*.properties
+*.key
+**/keys/
+**/*.key
+**/private_key*
+**/api_key*
+**/*_key.txt
+**/*_key.json
+.secrets/
+
+# But allow important source code files
+!**/*Manager.kt
+!**/*Service.kt
+!**/*Repository.kt
+!**/*Interceptor.kt
+
+# Lint reports
+lint-results-*.html
+lint-results-*.xml
+lint-baseline.xml
+
+# ProGuard mapping files
+/app/build/outputs/mapping/

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Default configuration for all domains -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+
+    <!-- Specific configuration for newsapi.org -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">newsapi.org</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+        <pin-set expiration="2025-12-31">
+            <!-- SHA-256 hashes of newsapi.org certificates -->
+            <pin digest="SHA-256">bKg2aMKeqFfv5TjaYDkBnCWyl2fCvavyedlN3mNcy+8=</pin>
+            <pin digest="SHA-256">kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=</pin>
+            <pin digest="SHA-256">mEflZT5enoR1FuXLgYYGqnVEoZvmf9c2bVBpiOjYQ0c=</pin>
+        </pin-set>
+    </domain-config>
+
+    <!-- Debug configuration for localhost -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
